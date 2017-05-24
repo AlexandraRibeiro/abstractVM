@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/24 16:37:37 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/24 17:51:14 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ Lexer &		Lexer::operator=(Lexer const & rhs) {
 }
 
 int		Lexer::_fsm[9][9]= {
-				{ERROR, ALPHA, IALPH, PAROP, SIGNS, VALUE, PARCL, SPACE, UNKNO},
-/* State 1 */	{ALPHA,  },
-/* State 2 */	{IALPH,  },
-/* State 3 */	{PAROP, },
-/* State 4 */	{SIGNS, },
-/* State 5 */	{VALUE, },
-/* State 6 */	{PARCL, },
-/* State 7 */	{SPACE, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR},
-/* State 8 */	{UNKNO, }
+	{END,	ALPHA,	INUM,	RNUM,	SIGN,	OPEN,	CLOS,	SPACE,	ERROR},
+	{ALPHA,	ALPHA,	ALPHA,	ERROR,	ERROR,	END,	ERROR,	END,	ERROR},
+	{INUM,  ERROR,	INUM,	RNUM,	ERROR,	ERROR,	END,	ERROR,	ERROR},
+	{RNUM,	ERROR,	RNUM,	ERROR,	ERROR,	ERROR,	END,	ERROR,	ERROR},
+	{SIGN,	ERROR,	END,	END,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR},
+	{OPEN,	ERROR,	END,	END,	END,	ERROR,	ERROR,	ERROR,	ERROR},
+	{CLOS,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	END,	ERROR},
+	{SPACE,	END,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR},
+	{ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	END,	ERROR}
 };

@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/24 16:47:49 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/24 17:41:55 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 #include "Lead.hpp"
 
 enum Instruction {
-	ERROR = 0;
+	END = 0;
 	ALPHA;
-	IALPH;
-	PAROP;
-	SIGNS;
-	VALUE;
-	PARCL;
+	INUM;
+	RNUM;
+	SIGN;
+	OPEN;
+	CLOS;
 	SPACE;
-	UNKNO;
+	ERROR;
 };
 
 class Lexer {
