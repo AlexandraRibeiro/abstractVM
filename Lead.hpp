@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:34 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/24 14:22:32 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/24 20:29:13 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@
 #include <iostream>
 #include <exception>
 
-class Lead : public std::exception {
+#include "Lexer.hpp"
+//ajouter std::exception
+class Lead {
 	public:
 		Lead(void);
 		Lead(Lead const & cpy);
 		~Lead(void);
-		Lead & operator=(Lead const & rhs);
+		Lead & operator=(Lead const &);
 	private:
+		Lexer* _lexer;
 };
 
 #endif

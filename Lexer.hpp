@@ -6,25 +6,25 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/24 17:41:55 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/24 20:52:03 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-#include "Lead.hpp"
+#include <iostream>
 
 enum Instruction {
-	END = 0;
-	ALPHA;
-	INUM;
-	RNUM;
-	SIGN;
-	OPEN;
-	CLOS;
-	SPACE;
-	ERROR;
+	END = 0,
+	ALPHA,		// Alpha || Alphanum
+	INUM, 		// Int
+	RNUM,		// Real (ex: 3.8)
+	SIGN,		// + || -
+	OPEN,		// '('
+	CLOS,		// ')'
+	SPACE,		// space || tab
+	ERROR,
 };
 
 class Lexer {
@@ -32,9 +32,9 @@ class Lexer {
 		Lexer(void);
 		Lexer(Lexer const & cpy);
 		~Lexer(void);
-		Lexer & operator=(Lexer const & rhs);
+		Lexer & operator=(Lexer const & );
 	private:
-		static int _fsm[7][7];
+		static int _fsm[9][9];
 };
 
 #endif
