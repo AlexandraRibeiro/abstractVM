@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/24 20:51:35 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/24 20:57:44 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ Lexer &		Lexer::operator=(Lexer const & ) {
 	return *this;
 }
 
-int		Lexer::_fsm[9][9]= {
+const int	Lexer::_fsm[9][9]= {
 				// NEXT CHARACTER
 {0,				ALPHA,	INUM,	RNUM,	SIGN,	OPEN,	CLOS,	SPACE,	ERROR},
 // STATE

@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/24 20:52:03 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/24 20:57:07 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ class Lexer {
 		~Lexer(void);
 		Lexer & operator=(Lexer const & );
 	private:
-		static int _fsm[9][9];
+		static const int _fsm[9][9];
 };
 
 #endif
