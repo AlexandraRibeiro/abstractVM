@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/26 20:13:41 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/26 20:25:35 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,12 @@ class Lexer {
 		Lexer(Lexer const & cpy);
 		~Lexer(void);
 		Lexer & operator=(Lexer const & );
-		void	read(void);
+		void						stock_input(std::string line);
+		std::vector<std::string>	& get_input(void);
+		void						read_input(void);
 	private:
-		static const int _fsm[9][9];
+		std::vector<std::string> 	_input;
+		static const int 			_fsm[9][9];
 };
 
 #endif

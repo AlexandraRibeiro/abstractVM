@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/26 20:18:16 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/26 20:26:03 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,19 @@ Lexer &		Lexer::operator=(Lexer const & ) {
 	return *this;
 }
 
-
-void		Lexer::read(void) {
-	std::cout << this << std::endl;
+void							Lexer::stock_input(std::string line) {
+	this->_input.push_back(line);
 }
+
+std::vector<std::string> &		Lexer::get_input(void) {
+	return (this->_input);
+}
+
+void							Lexer::read_input(void) {
+	for (std::vector<std::string>::const_iterator i = this->_input.begin(); i != this->_input.end(); i++)
+		std::cout << *i << std::endl;
+}
+
 
 const int	Lexer::_fsm[9][9]= {
 				// INPUT
