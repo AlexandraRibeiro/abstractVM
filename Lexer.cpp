@@ -6,20 +6,14 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/24 20:57:44 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/26 20:18:16 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lexer.hpp"
 
 Lexer::Lexer(void) {
-	int i = 0;
 	std::cout << "constructor Lexer called" << std::endl;
-	while (i < 9)
-	{
-		std::cout << this->_fsm[1][i] << std::endl;
-		i++;
-	}
 }
 
 Lexer::Lexer(Lexer const & cpy) {
@@ -27,14 +21,20 @@ Lexer::Lexer(Lexer const & cpy) {
 }
 
 Lexer::~Lexer(void) {
+	std::cout << "destructor Lexer called" << std::endl;
 }
 
 Lexer &		Lexer::operator=(Lexer const & ) {
 	return *this;
 }
 
+
+void		Lexer::read(void) {
+	std::cout << this << std::endl;
+}
+
 const int	Lexer::_fsm[9][9]= {
-				// NEXT CHARACTER
+				// INPUT
 {0,				ALPHA,	INUM,	RNUM,	SIGN,	OPEN,	CLOS,	SPACE,	ERROR},
 // STATE
 {ALPHA,			ALPHA,	ALPHA,	ERROR,	ERROR,	END,	ERROR,	END,	ERROR},

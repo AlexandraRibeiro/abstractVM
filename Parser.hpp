@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Lexer.hpp                                          :+:      :+:    :+:   */
+/*   Parser.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/26 20:13:41 by aribeiro         ###   ########.fr       */
+/*   Created: 2017/05/26 14:30:59 by aribeiro          #+#    #+#             */
+/*   Updated: 2017/05/26 20:15:17 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef PARSER_H
+# define PARSER_H
 
-#include <iostream>
-#include <vector>
+#include "Lexer.hpp"
 
-enum Instruction {
-	END = 0,
-	ALPHA,		// Alpha || Alphanum
-	INUM, 		// Int
-	RNUM,		// Real (ex: 3.8)
-	SIGN,		// + || -
-	OPEN,		// '('
-	CLOS,		// ')'
-	SPACE,		// space || tab
-	ERROR,
-};
-
-class Lexer {
+class Parser {
 	public:
-		Lexer(void);
-		Lexer(Lexer const & cpy);
-		~Lexer(void);
-		Lexer & operator=(Lexer const & );
-		void	read(void);
+		Parser(void);
+		Parser(Parser const & cpy);
+		~Parser(void);
+		Parser &	operator=(Parser const & );
+		// void		run_lexer(void);
+		Lexer &		get_lexer(void);
 	private:
-		static const int _fsm[9][9];
+		Lexer 	*_lexer;
 };
 
 #endif
