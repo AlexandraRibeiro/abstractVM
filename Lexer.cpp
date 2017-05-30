@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/30 18:39:42 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/30 21:16:08 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,39 +42,64 @@ std::vector<std::string> &		Lexer::get_input(void) {
 
 void							Lexer::set_lexical(void)
 {
-	int j = 0;
-	int c = 0;
+	int			j = 0;
+	int			w = 0;
+	int 		count_line = 1;
 	std::string tmp;
 	int			current_state = 0;
 	int			previous_state = 0;
+	bool		stop = false;
 	std::vector<std::string>::const_iterator i = this->_input.begin();
 	while (i != this->_input.end())
 	{
 		tmp = *i;
 		j = 0;
-		this->_lexical.push_back(scanner());
-		this->_lexical[c].nb_line = c + 1;
-		this->_lexical[c].line.append(tmp);
-		this->_lexical[c].error = false;
-		while (tmp[j] != '\0' && tmp[j] != ';')
+		current_state = 0;
+		previous_state = 0;
+		stop = false;
+
+		// line
+		while (tmp[j] != '\0')
 		{
-			current_state = this->_fsm[previous_state][this->get_token(tmp[j])];
-			if (current_state != END)
-				this->_lexical[c].lexeme.push_back(tmp[j]);
-			// else if (current_state == END)
-			// {
-			// 	this->_lexical[c].token = previous_state;
-			// 	break;
-			// }
-			if (current_state == ERROR)
+			//word
+			this->_lexical.push_back(scanner());
+			this->_lexical[w].nb_line = count_line;
+			this->_lexical[w].str.append(tmp);
+			this->_lexical[w].error = false;
+
+			//inside word
+			while (tmp[j] != '\0' && tmp[j] != ';')
 			{
-				this->_lexical[c].error = true;
-				break;
+				previous_state = current_state;
+				current_state = this->_fsm[previous_state][this->get_token(tmp[j])];
+				if (current_state != END)
+					this->_lexical[w].lexeme.push_back(tmp[j]);
+				if (current_state == END)
+				{
+						this->_lexical[w].token = previous_state;
+						break;
+				}
+				if (current_state == ERROR)
+				{
+						this->_lexical[w].token = current_state;
+						this->_lexical[w].error = true;
+						stop = true;
+						break;
+				}
+				j++;
+				if (tmp[j] == '\0' || tmp[j] == ';')
+				{
+					this->_lexical[w].token = previous_state;
+					stop = true;
+					break;
+				}
 			}
-			j++;
+			w++;
+			if (stop == true)
+				break;
 		}
 		i++;
-		c++;
+		count_line++;
 	}
 	this->debug_print_lexical();
 }
@@ -88,10 +113,10 @@ void							Lexer::debug_print_lexical(void) {
 	std::vector<scanner>::const_iterator i = this->_lexical.begin();
 	while (i != this->_lexical.end())
 	{
-		std::cout << "token = " << this->_lexical[c].token << std::endl;
-		std::cout << "lexeme = " << this->_lexical[c].lexeme << std::endl;
 		std::cout << "nb_line = " << this->_lexical[c].nb_line << std::endl;
-		std::cout << "line = " << this->_lexical[c].line << std::endl;
+		std::cout << "token = " << this->_lexical[c].token << std::endl;
+		std::cout << "lexeme = \"" << this->_lexical[c].lexeme << "\"" << std::endl;
+		std::cout << "str = \"" << this->_lexical[c].str << "\"" << std::endl;
 		std::cout << "error = " << this->_lexical[c].error << std::endl;
 		std::cout << "___________________________________________" << std::endl;
 		i++;
@@ -121,7 +146,7 @@ int								Lexer::get_token(char c) {
 // ____________________________________________________________________________
 const int	Lexer::_fsm[9][9]= {
 				/* INPUT */
-{0,				ALPHA,	INUM,	RNUM,	SIGN,	OPEN,	CLOS,	SPACE,	ERROR},
+{END,			ALPHA,	INUM,	RNUM,	SIGN,	OPEN,	CLOS,	SPACE,	ERROR},
 /* STATE */
 {ALPHA,			ALPHA,	ALPHA,	ERROR,	ERROR,	END,	ERROR,	END,	ERROR},
 {INUM,			ERROR,	INUM,	RNUM,	ERROR,	ERROR,	END,	ERROR,	ERROR},
@@ -130,5 +155,5 @@ const int	Lexer::_fsm[9][9]= {
 {OPEN,			ERROR,	END,	END,	END,	ERROR,	ERROR,	ERROR,	ERROR},
 {CLOS,			ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	END,	ERROR},
 {SPACE,			END,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR},
-{ERROR,			ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	END,	ERROR}
+{ERROR,			ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR,	ERROR}
 };
