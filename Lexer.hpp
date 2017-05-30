@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/30 19:37:26 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/30 21:21:00 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
 
 enum tokens {
 	END = 0,
-	ALPHA,		// Alpha || Alphanum
-	INUM, 		// Int
-	RNUM,		// Real (ex: 3.8)
-	SIGN,		// + || -
-	OPEN,		// '('
-	CLOS,		// ')'
-	SPACE,		// space || tab
+	ALPHA,		// 1 = Alpha || Alphanum
+	INUM, 		// 2 = Int
+	RNUM,		// 3 = Real (ex: 3.8)
+	SIGN,		// 4 = + || -
+	OPEN,		// 5 = '('
+	CLOS,		// 6 = ')'
+	SPACE,		// 7 = space || tab
 	ERROR,
 };
 

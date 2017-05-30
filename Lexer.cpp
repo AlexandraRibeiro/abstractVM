@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/30 21:16:08 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/30 21:19:41 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,20 @@ void							Lexer::set_lexical(void)
 	std::vector<std::string>::const_iterator i = this->_input.begin();
 	while (i != this->_input.end())
 	{
+		//go to the next line
 		tmp = *i;
 		j = 0;
 		current_state = 0;
 		previous_state = 0;
 		stop = false;
-
-		// line
+		//read line
 		while (tmp[j] != '\0')
 		{
-			//word
 			this->_lexical.push_back(scanner());
 			this->_lexical[w].nb_line = count_line;
 			this->_lexical[w].str.append(tmp);
 			this->_lexical[w].error = false;
-
-			//inside word
+			//read lexeme
 			while (tmp[j] != '\0' && tmp[j] != ';')
 			{
 				previous_state = current_state;
