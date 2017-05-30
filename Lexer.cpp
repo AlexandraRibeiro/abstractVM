@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/30 18:09:25 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/30 18:39:42 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,20 @@ void							Lexer::set_lexical(void)
 		tmp = *i;
 		j = 0;
 		this->_lexical.push_back(scanner());
+		this->_lexical[c].nb_line = c + 1;
+		this->_lexical[c].line.append(tmp);
+		this->_lexical[c].error = false;
 		while (tmp[j] != '\0' && tmp[j] != ';')
 		{
 			current_state = this->_fsm[previous_state][this->get_token(tmp[j])];
-			if (current_state != END && current_state != ERROR)
-			{
+			if (current_state != END)
 				this->_lexical[c].lexeme.push_back(tmp[j]);
-				this->_lexical[c].line = c + 1;
-			}
-			else if (current_state == END)
-			{
-				this->_lexical[c].token = previous_state;
-				break;
-			}
-			else if (current_state == ERROR)
+			// else if (current_state == END)
+			// {
+			// 	this->_lexical[c].token = previous_state;
+			// 	break;
+			// }
+			if (current_state == ERROR)
 			{
 				this->_lexical[c].error = true;
 				break;
@@ -88,7 +88,12 @@ void							Lexer::debug_print_lexical(void) {
 	std::vector<scanner>::const_iterator i = this->_lexical.begin();
 	while (i != this->_lexical.end())
 	{
-		std::cout << this->_lexical[c].lexeme << std::endl;
+		std::cout << "token = " << this->_lexical[c].token << std::endl;
+		std::cout << "lexeme = " << this->_lexical[c].lexeme << std::endl;
+		std::cout << "nb_line = " << this->_lexical[c].nb_line << std::endl;
+		std::cout << "line = " << this->_lexical[c].line << std::endl;
+		std::cout << "error = " << this->_lexical[c].error << std::endl;
+		std::cout << "___________________________________________" << std::endl;
 		i++;
 		c++;
 	}

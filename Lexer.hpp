@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/30 17:48:33 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/30 18:13:22 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ enum tokens {
 struct scanner {
 	int			token;
 	std::string	lexeme;
-	int			line;
+	int			nb_line;
+	std::string line;
 	bool		error;
 };
 
