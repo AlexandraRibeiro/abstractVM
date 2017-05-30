@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/30 15:25:55 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/30 17:56:34 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,6 @@ static void		stock_input_file(Lexer &l, Parser &p)
 		p.set_errors("_______ WARNING : no \";;\" at the end of program read from standard input");
 		std::cout << p.get_errors() << std::endl;
 	}
-
-//DEBUG *******************************************
-std::cout << "<DEBUG> print _input : " << std::endl;
-l.set_lexical();
-//DEBUG *******************************************
 }
 
 static void		stock_input_cin(char *filename, Lexer &l)
@@ -48,10 +43,6 @@ static void		stock_input_cin(char *filename, Lexer &l)
 			l.set_input(buff);
 		file.close();
 	}
-//DEBUG *******************************************
-std::cout << "<DEBUG> print _input : " << std::endl;
-l.set_lexical();
-//DEBUG *******************************************
 }
 
 int				main(int ac, char **av)
@@ -67,5 +58,6 @@ int				main(int ac, char **av)
 		stock_input_cin(av[1], *lexer);
 	else
 		stock_input_file(*lexer, *parser);
+	lexer->set_lexical();
 	return (0);
 }

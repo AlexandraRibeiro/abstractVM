@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/30 15:37:59 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/30 18:09:25 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,76 @@ std::vector<std::string> &		Lexer::get_input(void) {
 
 void							Lexer::set_lexical(void)
 {
-	// int	tmp = 0;
+	int j = 0;
+	int c = 0;
 	std::string tmp;
 	int			current_state = 0;
+	int			previous_state = 0;
 	std::vector<std::string>::const_iterator i = this->_input.begin();
 	while (i != this->_input.end())
 	{
 		tmp = *i;
-		// std::cout << tmp[2] << std::endl;
-		while (*tmp != '\0')
+		j = 0;
+		this->_lexical.push_back(scanner());
+		while (tmp[j] != '\0' && tmp[j] != ';')
 		{
-			if (this->_fsm[current_state][*tmp] == END)
+			current_state = this->_fsm[previous_state][this->get_token(tmp[j])];
+			if (current_state != END && current_state != ERROR)
+			{
+				this->_lexical[c].lexeme.push_back(tmp[j]);
+				this->_lexical[c].line = c + 1;
+			}
+			else if (current_state == END)
+			{
+				this->_lexical[c].token = previous_state;
+				break;
+			}
+			else if (current_state == ERROR)
+			{
+				this->_lexical[c].error = true;
+				break;
+			}
+			j++;
 		}
 		i++;
+		c++;
 	}
+	this->debug_print_lexical();
 }
 
 std::vector<scanner> &			Lexer::get_lexical(void) {
 	return (this->_lexical);
 }
 
+void							Lexer::debug_print_lexical(void) {
+	int c = 0;
+	std::vector<scanner>::const_iterator i = this->_lexical.begin();
+	while (i != this->_lexical.end())
+	{
+		std::cout << this->_lexical[c].lexeme << std::endl;
+		i++;
+		c++;
+	}
+}
+
+int								Lexer::get_token(char c) {
+	if (c >= 'a' && c <= 'z')
+		return ALPHA;
+	else if (c >= '0' && c <= '9')
+		return INUM;
+	else if (c == '.')
+		return RNUM;
+	else if (c == '+' || c == '-')
+		return SIGN;
+	else if (c == '(')
+		return OPEN;
+	else if (c == ')')
+		return CLOS;
+	else if (c == ' ' || c == '\t')
+		return SPACE;
+	else
+		return ERROR;
+}
 
 // ____________________________________________________________________________
 const int	Lexer::_fsm[9][9]= {
