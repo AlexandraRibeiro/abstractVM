@@ -6,14 +6,13 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/26 20:32:55 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/30 15:25:55 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lead.hpp"
 
-
-static void		read_input_file(Lexer &l, Parser &p)
+static void		stock_input_file(Lexer &l, Parser &p)
 {
 	std::string buff;
 	bool i = false;
@@ -25,33 +24,33 @@ static void		read_input_file(Lexer &l, Parser &p)
 			break ;
 		}
 		else
-			l.stock_input(buff);
+			l.set_input(buff);
 	}
 	if (i == false)
 	{
-		p.set_errors("_______ ERROR : no \";;\" at the end of program read from standard input");
+		p.set_errors("_______ WARNING : no \";;\" at the end of program read from standard input");
 		std::cout << p.get_errors() << std::endl;
 	}
 
 //DEBUG *******************************************
 std::cout << "<DEBUG> print _input : " << std::endl;
-l.read_input();
+l.set_lexical();
 //DEBUG *******************************************
 }
 
-static void		read_input_cin(char *filename, Lexer &l)
+static void		stock_input_cin(char *filename, Lexer &l)
 {
 	std::string buff;
 	std::ifstream file (filename);
 	if (file.is_open())
 	{
 		while (std::getline(file, buff))
-			l.stock_input(buff);
+			l.set_input(buff);
 		file.close();
 	}
 //DEBUG *******************************************
 std::cout << "<DEBUG> print _input : " << std::endl;
-l.read_input();
+l.set_lexical();
 //DEBUG *******************************************
 }
 
@@ -65,9 +64,8 @@ int				main(int ac, char **av)
 	lexer = &parser->get_lexer();
 
 	if (ac > 1)
-		read_input_cin(av[1], *lexer);
+		stock_input_cin(av[1], *lexer);
 	else
-		read_input_file(*lexer, *parser);
-
+		stock_input_file(*lexer, *parser);
 	return (0);
 }

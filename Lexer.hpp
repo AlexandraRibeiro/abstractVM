@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/26 20:25:35 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/30 15:24:32 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
+#include <iomanip>
+#include <fstream>
 
-enum Instruction {
+enum tokens {
 	END = 0,
 	ALPHA,		// Alpha || Alphanum
 	INUM, 		// Int
@@ -28,17 +31,26 @@ enum Instruction {
 	ERROR,
 };
 
+struct scanner {
+	int			token;
+	std::string	lexeme;
+	int			line;
+	bool		error;
+};
+
 class Lexer {
 	public:
 		Lexer(void);
 		Lexer(Lexer const & cpy);
 		~Lexer(void);
 		Lexer & operator=(Lexer const & );
-		void						stock_input(std::string line);
+		void						set_input(std::string line);
 		std::vector<std::string>	& get_input(void);
-		void						read_input(void);
+		void						set_lexical(void);
+		std::vector<scanner>		& get_lexical(void);
 	private:
 		std::vector<std::string> 	_input;
+		std::vector<scanner>		_lexical;
 		static const int 			_fsm[9][9];
 };
 
