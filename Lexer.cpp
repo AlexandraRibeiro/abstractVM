@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/31 18:16:23 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/31 19:34:39 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void							Lexer::set_lexical(void)
 		{
 			this->_lexical.push_back(s_scanner());
 			this->_lexical[w].nb_line = count_line;
-			this->_lexical[w].str.append(tmp);
+			this->_lexical[w].original_line.append(tmp);
 			this->_lexical[w].error = false;
 			//read lexeme
 			while (tmp[j] != '\0' && tmp[j] != ';')
@@ -128,7 +128,7 @@ void								Lexer::debug_print_lexical(void) {
 		std::cout << "nb_line = " << this->_lexical[c].nb_line << std::endl;
 		std::cout << "token = " << this->_lexical[c].token << std::endl;
 		std::cout << "lexeme = \"" << this->_lexical[c].lexeme << "\"" << std::endl;
-		std::cout << "str = \"" << this->_lexical[c].str << "\"" << std::endl;
+		std::cout << "original line = \"" << this->_lexical[c].original_line << "\"" << std::endl;
 		std::cout << "error = " << this->_lexical[c].error << std::endl;
 		std::cout << "error position = " << this->_lexical[c].error_position << std::endl;
 		std::cout << "___________________________________________" << std::endl;

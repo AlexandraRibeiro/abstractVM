@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:30:59 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/31 18:00:24 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/31 19:48:27 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ struct s_scanner2 {
 	int				instruction;
 	int				type;
 	int				value;
-	std::string		line;
+	std::string		original_line;
 	bool			error;
+	int				error_position;
 };
 
 class Parser {
@@ -57,6 +58,9 @@ class Parser {
 		Lexer &		get_lexer(void);
 		//parsing _____________________________________________
 		void	set_parsing(void);
+		void	debug_print_parsing(void);
+		void	init_scanner2(int j, int nb_line, int instruction, int type, int value,
+							std::string original_line, bool error, int error_position);
 		int		get_instruction(std::string lexeme);
 		int		get_type(std::string lexeme);
 	private:

@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/31 18:11:57 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/31 19:47:51 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,39 +48,59 @@ Lexer &		Parser::get_lexer(void) {
 
 
 // PARSING ____________________________________________________________________
-void		Parser::set_parsing(void) {
+void		Parser::set_parsing(void)
+{
 	int c = 0;
-	// int	j = 0;
+	int	j = -1;
 	std::vector<s_scanner> lex = this->_lexer->get_lexical();
 	std::vector<s_scanner>::const_iterator i = lex.begin();
 	while (i != lex.end())
 	{
-		this->_parsing.push_back(s_scanner2());
-		if (lex[c].error == true)
+		if (j == -1 || this->_parsing[j].nb_line != lex[c].nb_line)
 		{
-			this->_parsing[j].nb_line = lex[c].nb_line;
-			this->_parsing[j].instruction = -1;
-			this->_parsing[j].type = -1;
-			this->_parsing[j].value = -1;
-			this->_parsing[j].line.append(lex[c].str);
-			this->_parsing[j].error = true;
+			this->_parsing.push_back(s_scanner2());
+			j++;
+			this->init_scanner2(j, lex[c].nb_line, -1, -1, -1, lex[c].original_line, false, -1);
 		}
-
-		std::cout << "nb_line = " << lex[c].nb_line << std::endl;
-		std::cout << "token = " << lex[c].token << std::endl;
-		std::cout << "lexeme = \"" << lex[c].lexeme << "\"" << std::endl;
-		std::cout << "str = \"" << lex[c].str << "\"" << std::endl;
-		std::cout << "error = " << lex[c].error << std::endl;
-		std::cout << "___________________________________________" << std::endl;
-
-
-
 		i++;
 		c++;
 	}
 }
 
-int			Parser::get_instruction(std::string lexeme) {
+void		Parser::debug_print_parsing(void)
+{
+	int c = 0;
+	std::vector<s_scanner2>::const_iterator i = this->_parsing.begin();
+	while (i != this->_parsing.end())
+	{
+		std::cout << "nb_line = \"" << this->_parsing[c].nb_line << "\"" << std::endl;
+		std::cout << "instruction = \"" << this->_parsing[c].instruction << "\"" << std::endl;
+		std::cout << "type = \"" << this->_parsing[c].type << "\"" << std::endl;
+		std::cout << "value = \"" << this->_parsing[c].value << "\"" << std::endl;
+		std::cout << "original_line = \"" << this->_parsing[c].original_line << "\"" << std::endl;
+		std::cout << "error = \"" << this->_parsing[c].error << "\"" << std::endl;
+		std::cout << "error position = " << this->_parsing[c].error_position << "\"" << std::endl;
+		std::cout << "___________________________________________" << std::endl;
+		i++;
+		c++;
+	}
+
+}
+
+void		Parser::init_scanner2(int j, int nb_line, int instruction, int type,
+				int value, std::string original_line, bool error, int error_position)
+{
+	this->_parsing[j].nb_line = nb_line;
+	this->_parsing[j].instruction = instruction;
+	this->_parsing[j].type = type;
+	this->_parsing[j].value = value;
+	this->_parsing[j].original_line.append(original_line);
+	this->_parsing[j].error = error;
+	this->_parsing[j].error_position = error_position;
+}
+
+int			Parser::get_instruction(std::string lexeme)
+{
 	int i = 0;
 	while (i < 11)
 	{
@@ -91,7 +111,8 @@ int			Parser::get_instruction(std::string lexeme) {
 	return (-1);
 }
 
-int			Parser::get_type(std::string lexeme) {
+int			Parser::get_type(std::string lexeme)
+{
 	int i = 0;
 	while (i < 5)
 	{
@@ -110,4 +131,4 @@ const std::string		Parser::_instruct[11] = {
 
 const std::string		Parser::_type[5] = {
 	"int8", "int16", "int32", "float", "double" };
-	/* 0  ,  1	   ,  2	    ,  3     ,  4       */
+	/* 11  ,  12   ,  13    ,  14    ,  15      */
