@@ -6,13 +6,13 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/30 21:19:41 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/31 16:15:12 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lexer.hpp"
 
-// ____________________________________________________________________________
+
 Lexer::Lexer(void) {
 	std::cout << "constructor Lexer called" << std::endl;
 }
@@ -30,8 +30,7 @@ Lexer &		Lexer::operator=(Lexer const & ) {
 }
 
 
-// ____________________________________________________________________________
-
+// INPUT ______________________________________________________________________
 void							Lexer::set_input(std::string line) {
 	this->_input.push_back(line);
 }
@@ -40,6 +39,17 @@ std::vector<std::string> &		Lexer::get_input(void) {
 	return (this->_input);
 }
 
+void							Lexer::debug_print_input(void) {
+	std::vector<std::string>::const_iterator i = this->_input.begin();
+	while (i != this->_input.end())
+	{
+		std::cout << *i << std::endl;
+		i++;
+	}
+}
+
+
+// LEXICAL ____________________________________________________________________
 void							Lexer::set_lexical(void)
 {
 	int			j = 0;
@@ -61,7 +71,7 @@ void							Lexer::set_lexical(void)
 		//read line
 		while (tmp[j] != '\0')
 		{
-			this->_lexical.push_back(scanner());
+			this->_lexical.push_back(s_scanner());
 			this->_lexical[w].nb_line = count_line;
 			this->_lexical[w].str.append(tmp);
 			this->_lexical[w].error = false;
@@ -71,7 +81,10 @@ void							Lexer::set_lexical(void)
 				previous_state = current_state;
 				current_state = this->_fsm[previous_state][this->get_token(tmp[j])];
 				if (current_state != END)
+				{
+					this->_lexical[w].token = current_state;
 					this->_lexical[w].lexeme.push_back(tmp[j]);
+				}
 				if (current_state == END)
 				{
 						this->_lexical[w].token = previous_state;
@@ -79,7 +92,6 @@ void							Lexer::set_lexical(void)
 				}
 				if (current_state == ERROR)
 				{
-						this->_lexical[w].token = current_state;
 						this->_lexical[w].error = true;
 						stop = true;
 						break;
@@ -87,7 +99,7 @@ void							Lexer::set_lexical(void)
 				j++;
 				if (tmp[j] == '\0' || tmp[j] == ';')
 				{
-					this->_lexical[w].token = previous_state;
+					this->_lexical[w].token = current_state;
 					stop = true;
 					break;
 				}
@@ -100,15 +112,16 @@ void							Lexer::set_lexical(void)
 		count_line++;
 	}
 	this->debug_print_lexical();
+	std::vector<std::string>().swap(this->_input); 			//free this->_input
 }
 
-std::vector<scanner> &			Lexer::get_lexical(void) {
+std::vector<s_scanner> &			Lexer::get_lexical(void) {
 	return (this->_lexical);
 }
 
 void							Lexer::debug_print_lexical(void) {
 	int c = 0;
-	std::vector<scanner>::const_iterator i = this->_lexical.begin();
+	std::vector<s_scanner>::const_iterator i = this->_lexical.begin();
 	while (i != this->_lexical.end())
 	{
 		std::cout << "nb_line = " << this->_lexical[c].nb_line << std::endl;
@@ -122,6 +135,8 @@ void							Lexer::debug_print_lexical(void) {
 	}
 }
 
+
+// TOKEN ______________________________________________________________________
 int								Lexer::get_token(char c) {
 	if (c >= 'a' && c <= 'z')
 		return ALPHA;
@@ -141,7 +156,8 @@ int								Lexer::get_token(char c) {
 		return ERROR;
 }
 
-// ____________________________________________________________________________
+
+// STATIC _____________________________________________________________________
 const int	Lexer::_fsm[9][9]= {
 				/* INPUT */
 {END,			ALPHA,	INUM,	RNUM,	SIGN,	OPEN,	CLOS,	SPACE,	ERROR},

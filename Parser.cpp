@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/26 20:33:15 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/31 15:53:29 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,3 +43,11 @@ void		Parser::set_errors(std::string str) {
 Lexer &		Parser::get_lexer(void) {
 	return *this->_lexer;
 }
+
+const std::string		Parser::_instruct[11] = {
+	"push", "pop", "dump", "assert", "add", "sub", "mul", "div", "mod", "print", "exit" };
+	/* 0  ,  1	 ,  2	 ,  3      ,  4   ,  5   ,  6   ,  7   ,  8   ,  9     ,  10 	*/
+
+const std::string		Parser::_type[5] = {
+	"int8", "int16", "int32", "float", "double" };
+	/* 0  ,  1	   ,  2	    ,  3     ,  4       */

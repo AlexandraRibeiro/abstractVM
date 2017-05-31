@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/30 18:52:02 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/31 16:17:14 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ int				main(int ac, char **av)
 		stock_input_cin(av[1], *lexer);
 	else
 		stock_input_file(*lexer, *parser);
+
 	lexer->set_lexical();
+
+// std::cout << "test dealloc vector" << std::endl;
+// lexer->debug_print_input();
+
+	// parser->
+
 	return (0);
 }
