@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/31 19:34:39 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/31 19:55:21 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void							Lexer::set_lexical(void)
 		while (tmp[j] != '\0')
 		{
 			this->_lexical.push_back(s_scanner());
-			this->_lexical[w].nb_line = count_line;
+			this->_lexical[w].line_nb = count_line;
 			this->_lexical[w].original_line.append(tmp);
 			this->_lexical[w].error = false;
 			//read lexeme
@@ -125,7 +125,7 @@ void								Lexer::debug_print_lexical(void) {
 	std::vector<s_scanner>::const_iterator i = this->_lexical.begin();
 	while (i != this->_lexical.end())
 	{
-		std::cout << "nb_line = " << this->_lexical[c].nb_line << std::endl;
+		std::cout << "line_nb = " << this->_lexical[c].line_nb << std::endl;
 		std::cout << "token = " << this->_lexical[c].token << std::endl;
 		std::cout << "lexeme = \"" << this->_lexical[c].lexeme << "\"" << std::endl;
 		std::cout << "original line = \"" << this->_lexical[c].original_line << "\"" << std::endl;

@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/31 19:47:51 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/31 19:55:10 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ void		Parser::set_parsing(void)
 	std::vector<s_scanner>::const_iterator i = lex.begin();
 	while (i != lex.end())
 	{
-		if (j == -1 || this->_parsing[j].nb_line != lex[c].nb_line)
+		if (j == -1 || this->_parsing[j].line_nb != lex[c].line_nb)
 		{
 			this->_parsing.push_back(s_scanner2());
 			j++;
-			this->init_scanner2(j, lex[c].nb_line, -1, -1, -1, lex[c].original_line, false, -1);
+			this->init_scanner2(j, lex[c].line_nb, -1, -1, -1, lex[c].original_line, false, -1);
 		}
 		i++;
 		c++;
@@ -73,7 +73,7 @@ void		Parser::debug_print_parsing(void)
 	std::vector<s_scanner2>::const_iterator i = this->_parsing.begin();
 	while (i != this->_parsing.end())
 	{
-		std::cout << "nb_line = \"" << this->_parsing[c].nb_line << "\"" << std::endl;
+		std::cout << "line_nb = \"" << this->_parsing[c].line_nb << "\"" << std::endl;
 		std::cout << "instruction = \"" << this->_parsing[c].instruction << "\"" << std::endl;
 		std::cout << "type = \"" << this->_parsing[c].type << "\"" << std::endl;
 		std::cout << "value = \"" << this->_parsing[c].value << "\"" << std::endl;
@@ -87,10 +87,10 @@ void		Parser::debug_print_parsing(void)
 
 }
 
-void		Parser::init_scanner2(int j, int nb_line, int instruction, int type,
+void		Parser::init_scanner2(int j, int line_nb, int instruction, int type,
 				int value, std::string original_line, bool error, int error_position)
 {
-	this->_parsing[j].nb_line = nb_line;
+	this->_parsing[j].line_nb = line_nb;
 	this->_parsing[j].instruction = instruction;
 	this->_parsing[j].type = type;
 	this->_parsing[j].value = value;

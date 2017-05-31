@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:30:59 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/31 19:48:27 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/31 19:58:30 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ enum types {
 };
 
 struct s_scanner2 {
-	int				nb_line;
+	int				line_nb;
 	int				instruction;
 	int				type;
 	int				value;
@@ -59,7 +59,7 @@ class Parser {
 		//parsing _____________________________________________
 		void	set_parsing(void);
 		void	debug_print_parsing(void);
-		void	init_scanner2(int j, int nb_line, int instruction, int type, int value,
+		void	init_scanner2(int j, int line_nb, int instruction, int type, int value,
 							std::string original_line, bool error, int error_position);
 		int		get_instruction(std::string lexeme);
 		int		get_type(std::string lexeme);
@@ -67,6 +67,7 @@ class Parser {
 		Lexer 						*_lexer;
 		std::string					_errors;
 		std::vector<s_scanner2>		_parsing;
+		// static ______________________________________________
 		static const std::string	_instruct[11];
 		static const std::string	_type[5];
 };
