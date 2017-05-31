@@ -6,18 +6,18 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/31 16:15:12 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/31 18:16:23 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lexer.hpp"
 
 
-Lexer::Lexer(void) {
+Lexer::Lexer(void) : _errorFinded(false) {
 	std::cout << "constructor Lexer called" << std::endl;
 }
 
-Lexer::Lexer(Lexer const & cpy) {
+Lexer::Lexer(Lexer const & cpy) : _errorFinded(false) {
 	*this = cpy;
 }
 
@@ -93,6 +93,8 @@ void							Lexer::set_lexical(void)
 				if (current_state == ERROR)
 				{
 						this->_lexical[w].error = true;
+						this->_lexical[w].error_position = j;
+						this->_errorFinded = true;
 						stop = true;
 						break;
 				}
@@ -111,7 +113,6 @@ void							Lexer::set_lexical(void)
 		i++;
 		count_line++;
 	}
-	this->debug_print_lexical();
 	std::vector<std::string>().swap(this->_input); 			//free this->_input
 }
 
@@ -119,7 +120,7 @@ std::vector<s_scanner> &			Lexer::get_lexical(void) {
 	return (this->_lexical);
 }
 
-void							Lexer::debug_print_lexical(void) {
+void								Lexer::debug_print_lexical(void) {
 	int c = 0;
 	std::vector<s_scanner>::const_iterator i = this->_lexical.begin();
 	while (i != this->_lexical.end())
@@ -129,6 +130,7 @@ void							Lexer::debug_print_lexical(void) {
 		std::cout << "lexeme = \"" << this->_lexical[c].lexeme << "\"" << std::endl;
 		std::cout << "str = \"" << this->_lexical[c].str << "\"" << std::endl;
 		std::cout << "error = " << this->_lexical[c].error << std::endl;
+		std::cout << "error position = " << this->_lexical[c].error_position << std::endl;
 		std::cout << "___________________________________________" << std::endl;
 		i++;
 		c++;
@@ -136,8 +138,8 @@ void							Lexer::debug_print_lexical(void) {
 }
 
 
-// TOKEN ______________________________________________________________________
-int								Lexer::get_token(char c) {
+// GETTER ______________________________________________________________________
+int		Lexer::get_token(char c) {
 	if (c >= 'a' && c <= 'z')
 		return ALPHA;
 	else if (c >= '0' && c <= '9')
@@ -154,6 +156,10 @@ int								Lexer::get_token(char c) {
 		return SPACE;
 	else
 		return ERROR;
+}
+
+bool	Lexer::get_errorFinded(void) {
+	return this->_errorFinded;
 }
 
 

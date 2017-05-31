@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/31 16:14:26 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/05/31 18:15:26 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ struct s_scanner {
 	std::string	lexeme;
 	std::string str;
 	bool		error;
+	int			error_position;
 };
 
 class Lexer {
@@ -53,14 +54,14 @@ class Lexer {
 		void						set_lexical(void);
 		std::vector<s_scanner>		& get_lexical(void);
 		void						debug_print_lexical(void);
-		// token _______________________________________________
+		// getter _______________________________________________
 		int							get_token(char c);
-
-
+		bool						get_errorFinded(void);
 
 	private:
 		std::vector<std::string> 	_input;
 		std::vector<s_scanner>		_lexical;
+		bool						_errorFinded;
 		// static ______________________________________________
 		static const int 			_fsm[9][9];
 };
