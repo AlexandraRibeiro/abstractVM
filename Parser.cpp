@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/03 20:56:59 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/03 20:58:52 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,9 @@ void		Parser::set_parsing(void)
 		{
 			this->_parsing[j].error = true;
 
-// FOR DEBUG +++++++++++++++++++++++++++++++++++++++++++++++
-std::cout << "------> line " << this->_parsing[j].line_nb << "  " << this->_verbose[pos] << std::endl;
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			// FOR DEBUG +++++++++++++++++++++++++++++++++++++++++++++++
+			std::cout << "------> line " << this->_parsing[j].line_nb << "  " << this->_verbose[pos] << std::endl;
+			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 			while (i != lex.end() && this->_parsing[j].line_nb == lex[c].line_nb)
 			{
