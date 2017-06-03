@@ -6,13 +6,13 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/31 19:47:03 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/03 14:21:53 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lead.hpp"
 
-static void		stock_input_file(Lexer &l, Parser &p)
+static void		stock_input_cin(Lexer &l, Parser &p)
 {
 	std::string buff;
 	bool i = false;
@@ -33,7 +33,7 @@ static void		stock_input_file(Lexer &l, Parser &p)
 	}
 }
 
-static void		stock_input_cin(char *filename, Lexer &l)
+static void		stock_input_file(char *filename, Lexer &l)
 {
 	std::string buff;
 	std::ifstream file (filename);
@@ -55,9 +55,9 @@ int				main(int ac, char **av)
 	lexer = &parser->get_lexer();
 
 	if (ac > 1)
-		stock_input_cin(av[1], *lexer);
+		stock_input_file(av[1], *lexer);
 	else
-		stock_input_file(*lexer, *parser);
+		stock_input_cin(*lexer, *parser);
 
 	lexer->set_lexical();
 /* DEBUG : VERIF SCAN LEXER _____________________*/

@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/31 19:55:21 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/03 14:22:00 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void							Lexer::set_lexical(void)
 			this->_lexical[w].original_line.append(tmp);
 			this->_lexical[w].error = false;
 			//read lexeme
-			while (tmp[j] != '\0' && tmp[j] != ';')
+			while (tmp[j] != '\0')
 			{
 				previous_state = current_state;
 				current_state = this->_fsm[previous_state][this->get_token(tmp[j])];
