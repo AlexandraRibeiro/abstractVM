@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:30:59 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/03 20:12:29 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/03 20:56:31 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PARSER_H
 
 #include "Lexer.hpp"
-#include <stdlib.h> //atoi
 
 enum instructions {
 	PUSH = 0,
@@ -71,7 +70,7 @@ class Parser {
 		// static ______________________________________________
 		static const std::string	_instruct[11];
 		static const std::string	_type[5];
-		static const std::string	_verbose[11];
+		static const std::string	_verbose[12];
 };
 
 #endif

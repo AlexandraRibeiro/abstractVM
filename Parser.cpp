@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/03 20:30:50 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/03 20:56:59 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void		Parser::set_parsing(void)
 		{
 			if (lex[c].error == true)
 			{
-				pos = 10; //dit qu'il y a une erreur lexer
+				pos = 11; //dit qu'il y a une erreur lexer
 				this->_parsing[j].error_position = lex[c].error_position;
 				break; // pos = 0
 			}
@@ -84,10 +84,12 @@ void		Parser::set_parsing(void)
 			{
 				if (lex[c].token != SPACE)
 				{
-					pos = 2;
+					if (pos == 1)
+						pos = 10;
 					break;
 				}
-				pos++;
+				if (pos == 2)
+					pos++;
 			}
 			else if (pos == 3)													//search type
 			{
@@ -118,7 +120,7 @@ void		Parser::set_parsing(void)
 					break;
 				if (sign == true)
 					lex[c].lexeme.insert(0, lex[c - 1].lexeme);
-				this->_parsing[j].value = 42; //attention atoi undefined behavior
+				this->_parsing[j].value = 42; //valeur en dur remplacer par un atoi
 				pos++;
 			}
 			else if (pos == 7)
@@ -222,7 +224,7 @@ const std::string		Parser::_type[5] = {
 	"int8", "int16", "int32", "float", "double" };
 	/* 0  ,  1     ,  2     ,  3     ,  4       */
 
-const std::string		Parser::_verbose[11] = {
+const std::string		Parser::_verbose[12] = {
 	"error not a valid instruction",				// pos = 0
 	"",
 	"error after instruction", 						// pos = 2
@@ -233,5 +235,6 @@ const std::string		Parser::_verbose[11] = {
 	"error expected ')' after value",				// pos = 7
 	"",
 	"error after ')'",								// pos = 9
-	"the lexer found an error" 						// pos = 10
+	"error expected nothing after this instruction",// pos = 10
+	"the lexer found an error" 						// pos = 11
 };
