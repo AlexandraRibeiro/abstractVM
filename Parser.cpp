@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/03 19:29:06 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/03 20:30:50 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ Lexer &		Parser::get_lexer(void) {
 void		Parser::set_parsing(void)
 {
 	int pos = 0;
-	int c = -1;
+	int c = 0;
 	int	j = -1;
-	int r;
 	bool sign;
 	std::vector<s_scanner> lex = this->_lexer->get_lexical();
 	std::vector<s_scanner>::const_iterator i = lex.begin();
@@ -76,11 +75,10 @@ void		Parser::set_parsing(void)
 				this->_parsing[j].instruction = this->get_instruction(lex[c].lexeme);
 				if (this->_parsing[j].instruction == -1)
 					break;
-				}
 				if (this->_parsing[j].instruction == PUSH || this->_parsing[j].instruction == ASSERT)
 					pos = 2;
 				else
-					pos = 1
+					pos = 1;
 			}
 			else if (pos == 1 || pos == 2) 										//search SPACE
 			{
@@ -108,15 +106,20 @@ void		Parser::set_parsing(void)
 			{
 				if (lex[c].token != SIGN && lex[c].token != INUM && lex[c].token != RNUM)
 					break;
-				else if (lex[c].token == SIGN && lex[c].lexeme.compare("-") == 0)
+				else if (lex[c].token == SIGN)
 					sign = true;
-				pos++;
+				else if (lex[c].token == INUM || lex[c].token != RNUM)
+					pos++;
 			}
 			/**** Because SIGN is optional start with "if" not "else if" *****/
 			if (pos == 6)														//search value
 			{
-
-
+				if (lex[c].token != SIGN && lex[c].token != INUM && lex[c].token != RNUM)
+					break;
+				if (sign == true)
+					lex[c].lexeme.insert(0, lex[c - 1].lexeme);
+				this->_parsing[j].value = 42; //attention atoi undefined behavior
+				pos++;
 			}
 			else if (pos == 7)
 			{
@@ -140,11 +143,15 @@ void		Parser::set_parsing(void)
 		{
 			this->_parsing[j].error = true;
 
-//DEBUG
-std::cout << "------> " << this->_verbose[pos] << std::endl;
+// FOR DEBUG +++++++++++++++++++++++++++++++++++++++++++++++
+std::cout << "------> line " << this->_parsing[j].line_nb << "  " << this->_verbose[pos] << std::endl;
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-			while (this->_parsing[j].line_nb == lex[c].line_nb)
+			while (i != lex.end() && this->_parsing[j].line_nb == lex[c].line_nb)
+			{
 				c++;
+				i++;
+			}
 		}
 	}
 }
@@ -215,13 +222,16 @@ const std::string		Parser::_type[5] = {
 	"int8", "int16", "int32", "float", "double" };
 	/* 0  ,  1     ,  2     ,  3     ,  4       */
 
-const std::string		Parser::_verbose[5] = {
+const std::string		Parser::_verbose[11] = {
 	"error not a valid instruction",				// pos = 0
+	"",
 	"error after instruction", 						// pos = 2
 	"error expected type after space",				// pos = 3
 	"error expected '(' after type",				// pos = 4
 	"error after '('",								// pos = 5
 	"error not a valid value",						// pos = 6
 	"error expected ')' after value",				// pos = 7
-	"error after ')'"								// pos = 9
-	"the lexer found an error" };					// pos = 10
+	"",
+	"error after ')'",								// pos = 9
+	"the lexer found an error" 						// pos = 10
+};

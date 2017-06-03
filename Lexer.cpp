@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/03 14:22:00 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/03 20:37:44 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void							Lexer::set_lexical(void)
 		previous_state = 0;
 		stop = false;
 		//read line
-		while (tmp[j] != '\0')
+		while (tmp[j] != '\0' && tmp[j] != ';')
 		{
 			this->_lexical.push_back(s_scanner());
 			this->_lexical[w].line_nb = count_line;
