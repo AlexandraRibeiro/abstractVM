@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/03 19:10:14 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/03 19:29:06 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,29 +50,25 @@ Lexer &		Parser::get_lexer(void) {
 // PARSING ____________________________________________________________________
 void		Parser::set_parsing(void)
 {
-	int pos = 1;
-	int c = 0;
-	int	j = 0;
+	int pos = 0;
+	int c = -1;
+	int	j = -1;
 	int r;
 	bool sign;
 	std::vector<s_scanner> lex = this->_lexer->get_lexical();
 	std::vector<s_scanner>::const_iterator i = lex.begin();
 	while (i != lex.end())
 	{
-		if (pos != 1 && pos != 9)
-		{
-			c--; //pas certaine que ce soit necessaire
-			while (this->_parsing[j].line_nb == lex[c].line_nb)
-				c++;
-		}
 		pos = 0;
 		this->_parsing.push_back(s_scanner2());
+		j++;
 		this->init_scanner2(j, lex[c].line_nb, -1, -1, -1, lex[c].original_line, false, -1);
-		while (this->_parsing[j].line_nb == lex[c].line_nb)
+		while (i != lex.end() && this->_parsing[j].line_nb == lex[c].line_nb)
 		{
 			if (lex[c].error == true)
 			{
 				pos = 10; //dit qu'il y a une erreur lexer
+				this->_parsing[j].error_position = lex[c].error_position;
 				break; // pos = 0
 			}
 			else if (pos == 0) 													//search instruction
@@ -86,7 +82,7 @@ void		Parser::set_parsing(void)
 				else
 					pos = 1
 			}
-			else if (pos == 1 || pos == 2) 										//search space
+			else if (pos == 1 || pos == 2) 										//search SPACE
 			{
 				if (lex[c].token != SPACE)
 				{
@@ -117,15 +113,39 @@ void		Parser::set_parsing(void)
 				pos++;
 			}
 			/**** Because SIGN is optional start with "if" not "else if" *****/
-			if (pos == 6)
+			if (pos == 6)														//search value
 			{
-				this->_parsing[j].value = atoi();
+
 
 			}
+			else if (pos == 7)
+			{
+				if (lex[c].token != CLOS)
+					break;
+				pos++;
+			}
+			else if (pos == 8)													//search SPACE (optional)
+			{
+				if (lex[c].token != SPACE)
+				{
+					pos++;
+					break;
+				}
+			}
+			c++;
+			i++;
 		}
-		j++;
-		i++;
-		c++;
+		/***** End parsing line ****/
+		if (pos != 1 && pos != 8)
+		{
+			this->_parsing[j].error = true;
+
+//DEBUG
+std::cout << "------> " << this->_verbose[pos] << std::endl;
+
+			while (this->_parsing[j].line_nb == lex[c].line_nb)
+				c++;
+		}
 	}
 }
 
@@ -203,5 +223,5 @@ const std::string		Parser::_verbose[5] = {
 	"error after '('",								// pos = 5
 	"error not a valid value",						// pos = 6
 	"error expected ')' after value",				// pos = 7
-	"error after ')'"								// pos = 8
+	"error after ')'"								// pos = 9
 	"the lexer found an error" };					// pos = 10
