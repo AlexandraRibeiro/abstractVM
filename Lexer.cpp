@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/03 20:37:44 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/04 17:23:09 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void							Lexer::set_lexical(void)
 				if (current_state == ERROR)
 				{
 						this->_lexical[w].error = true;
-						this->_lexical[w].error_position = j;
+						this->_lexical[w].error_position_lexer = j;
 						this->_errorFinded = true;
 						stop = true;
 						break;
@@ -130,7 +130,7 @@ void								Lexer::debug_print_lexical(void) {
 		std::cout << "lexeme = \"" << this->_lexical[c].lexeme << "\"" << std::endl;
 		std::cout << "original line = \"" << this->_lexical[c].original_line << "\"" << std::endl;
 		std::cout << "error = " << this->_lexical[c].error << std::endl;
-		std::cout << "error position = " << this->_lexical[c].error_position << std::endl;
+		std::cout << "error position = " << this->_lexical[c].error_position_lexer << std::endl;
 		std::cout << "___________________________________________" << std::endl;
 		i++;
 		c++;

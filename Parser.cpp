@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/03 20:58:52 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/04 18:08:36 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,16 @@ void		Parser::set_parsing(void)
 	int pos = 0;
 	int c = 0;
 	int	j = -1;
-	bool sign;
+	int sign = 1;
+	bool exit_found = false;
+	std::ostringstream oss;
 	std::vector<s_scanner> lex = this->_lexer->get_lexical();
 	std::vector<s_scanner>::const_iterator i = lex.begin();
+	if (i == lex.end())
+	{
+		std::cout << "error empty input" << std::endl;
+		return;
+	}
 	while (i != lex.end())
 	{
 		pos = 0;
@@ -66,15 +73,22 @@ void		Parser::set_parsing(void)
 		{
 			if (lex[c].error == true)
 			{
-				pos = 11; //dit qu'il y a une erreur lexer
-				this->_parsing[j].error_position = lex[c].error_position;
-				break; // pos = 0
+				pos = 20; //dit qu'il y a une erreur lexer
+				this->_parsing[j].error_position_lexer = lex[c].error_position_lexer;
+				break;
 			}
 			else if (pos == 0) 													//search instruction
 			{
 				this->_parsing[j].instruction = this->get_instruction(lex[c].lexeme);
 				if (this->_parsing[j].instruction == -1)
 					break;
+				if (this->_parsing[j].instruction == EXIT && exit_found == false)
+					exit_found = true;
+				else if (this->_parsing[j].instruction == EXIT && exit_found == true)
+				{
+					pos = 12;
+					break;
+				}
 				if (this->_parsing[j].instruction == PUSH || this->_parsing[j].instruction == ASSERT)
 					pos = 2;
 				else
@@ -85,7 +99,7 @@ void		Parser::set_parsing(void)
 				if (lex[c].token != SPACE)
 				{
 					if (pos == 1)
-						pos = 10;
+						pos = 11;
 					break;
 				}
 				if (pos == 2)
@@ -108,8 +122,8 @@ void		Parser::set_parsing(void)
 			{
 				if (lex[c].token != SIGN && lex[c].token != INUM && lex[c].token != RNUM)
 					break;
-				else if (lex[c].token == SIGN)
-					sign = true;
+				else if (lex[c].token == SIGN && lex[c].lexeme.compare("-") == 0)
+					sign = -1;
 				else if (lex[c].token == INUM || lex[c].token != RNUM)
 					pos++;
 			}
@@ -118,8 +132,8 @@ void		Parser::set_parsing(void)
 			{
 				if (lex[c].token != SIGN && lex[c].token != INUM && lex[c].token != RNUM)
 					break;
-				if (sign == true)
-					lex[c].lexeme.insert(0, lex[c - 1].lexeme);
+				// if (sign == true)
+				// 	lex[c].lexeme.insert(0, lex[c - 1].lexeme);
 				this->_parsing[j].value = 42; //valeur en dur remplacer par un atoi
 				pos++;
 			}
@@ -143,18 +157,41 @@ void		Parser::set_parsing(void)
 		/***** End parsing line ****/
 		if (pos != 1 && pos != 8)
 		{
-			this->_parsing[j].error = true;
-
-			// FOR DEBUG +++++++++++++++++++++++++++++++++++++++++++++++
-			std::cout << "------> line " << this->_parsing[j].line_nb << "  " << this->_verbose[pos] << std::endl;
-			//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+			if (pos != 20)
+			{
+				this->_parsing[j].error = true;
+				this->_parsing[j].error_verbose.append("------> line ");
+				oss.str("");
+				oss << this->_parsing[j].line_nb;
+				this->_parsing[j].error_verbose.append(oss.str());
+				this->_parsing[j].error_verbose.append(this->_verbose[pos]);
+			}
 			while (i != lex.end() && this->_parsing[j].line_nb == lex[c].line_nb)
 			{
+				if (lex[c].error == true)
+				{
+					this->_parsing[j].error_verbose.append("------> line ");
+					oss.str("");
+					oss << this->_parsing[j].line_nb;
+					this->_parsing[j].error_verbose.append(oss.str());
+					this->_parsing[j].error_verbose.append(" : (lexer) error found at the position ");
+					oss.str("");
+					oss << lex[c].error_position_lexer;
+					this->_parsing[j].error_verbose.append(oss.str());
+					this->_parsing[j].error_verbose.push_back('\n');
+				}
 				c++;
 				i++;
 			}
 		}
+	}
+	if (this->_parsing[j].instruction != EXIT)
+	{
+		this->_parsing[j].error_verbose.append("------> line ");
+		oss.str("");
+		oss << this->_parsing[j].line_nb;
+		this->_parsing[j].error_verbose.append(oss.str());
+		this->_parsing[j].error_verbose.append(this->_verbose[EXIT]);
 	}
 }
 
@@ -170,7 +207,8 @@ void		Parser::debug_print_parsing(void)
 		std::cout << "value = \"" << this->_parsing[c].value << "\"" << std::endl;
 		std::cout << "original_line = \"" << this->_parsing[c].original_line << "\"" << std::endl;
 		std::cout << "error = \"" << this->_parsing[c].error << "\"" << std::endl;
-		std::cout << "error position = " << this->_parsing[c].error_position << "\"" << std::endl;
+		std::cout << "error position lexer = \"" << this->_parsing[c].error_position_lexer << "\"" << std::endl;
+		std::cout << "error verbose = \"" << this->_parsing[c].error_verbose << "\"" << std::endl;
 		std::cout << "___________________________________________" << std::endl;
 		i++;
 		c++;
@@ -179,7 +217,7 @@ void		Parser::debug_print_parsing(void)
 }
 
 void		Parser::init_scanner2(int j, int line_nb, int instruction, int type,
-				int value, std::string original_line, bool error, int error_position)
+				int value, std::string original_line, bool error, int error_position_lexer)
 {
 	this->_parsing[j].line_nb = line_nb;
 	this->_parsing[j].instruction = instruction;
@@ -187,7 +225,8 @@ void		Parser::init_scanner2(int j, int line_nb, int instruction, int type,
 	this->_parsing[j].value = value;
 	this->_parsing[j].original_line.append(original_line);
 	this->_parsing[j].error = error;
-	this->_parsing[j].error_position = error_position;
+	this->_parsing[j].error_position_lexer = error_position_lexer;
+	this->_parsing[j].error_verbose.append("");
 }
 
 int			Parser::get_instruction(std::string lexeme)
@@ -224,17 +263,18 @@ const std::string		Parser::_type[5] = {
 	"int8", "int16", "int32", "float", "double" };
 	/* 0  ,  1     ,  2     ,  3     ,  4       */
 
-const std::string		Parser::_verbose[12] = {
-	"error not a valid instruction",				// pos = 0
+const std::string		Parser::_verbose[13] = {
+	" : (parser) error not a valid instruction\n",						// pos = 0
 	"",
-	"error after instruction", 						// pos = 2
-	"error expected type after space",				// pos = 3
-	"error expected '(' after type",				// pos = 4
-	"error after '('",								// pos = 5
-	"error not a valid value",						// pos = 6
-	"error expected ')' after value",				// pos = 7
+	" : (parser) error after instruction\n", 							// pos = 2
+	" : (parser) error expected type after space\n",					// pos = 3
+	" : (parser) error expected '(' after type\n",						// pos = 4
+	" : (parser) error after '('\n",									// pos = 5
+	" : (parser) error not a valid value\n",							// pos = 6
+	" : (parser) error expected ')' after value\n",						// pos = 7
 	"",
-	"error after ')'",								// pos = 9
-	"error expected nothing after this instruction",// pos = 10
-	"the lexer found an error" 						// pos = 11
+	" : (parser) error after ')'\n",									// pos = 9
+	" : (parser) the program doesn’t have an exit instruction\n",		// pos = 10 = EXIT
+	" : (parser) error expected nothing after this instruction\n",		// pos = 11
+	" : (parser) error find 2 exit instruction\n",						// pos = 12
 };

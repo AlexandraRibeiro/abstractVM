@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/05/31 19:55:31 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/04 17:24:15 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ struct s_scanner {
 	std::string	lexeme;
 	std::string original_line;
 	bool		error;
-	int			error_position;
+	int			error_position_lexer;
 };
 
 class Lexer {
