@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/04 17:23:09 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/04 20:42:44 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ std::vector<std::string> &		Lexer::get_input(void) {
 }
 
 void							Lexer::debug_print_input(void) {
-	std::vector<std::string>::const_iterator i = this->_input.begin();
-	while (i != this->_input.end())
+	size_t c = 0;
+	while (c < this->_input.size())
 	{
-		std::cout << *i << std::endl;
-		i++;
+		std::cout << this->_input[c] << std::endl;
+		c++;
 	}
 }
 
@@ -121,18 +121,17 @@ std::vector<s_scanner> &			Lexer::get_lexical(void) {
 }
 
 void								Lexer::debug_print_lexical(void) {
-	int c = 0;
-	std::vector<s_scanner>::const_iterator i = this->_lexical.begin();
-	while (i != this->_lexical.end())
+	size_t c = 0;
+	std::cout << "\n**** LEXER ****\n";
+	while (c < this->_lexical.size())
 	{
 		std::cout << "line_nb = " << this->_lexical[c].line_nb << std::endl;
 		std::cout << "token = " << this->_lexical[c].token << std::endl;
-		std::cout << "lexeme = \"" << this->_lexical[c].lexeme << "\"" << std::endl;
-		std::cout << "original line = \"" << this->_lexical[c].original_line << "\"" << std::endl;
+		std::cout << "lexeme = \"" << this->_lexical[c].lexeme << "\"\n";
+		std::cout << "original line = \"" << this->_lexical[c].original_line << "\"\n";
 		std::cout << "error = " << this->_lexical[c].error << std::endl;
 		std::cout << "error position = " << this->_lexical[c].error_position_lexer << std::endl;
-		std::cout << "___________________________________________" << std::endl;
-		i++;
+		std::cout << "___________________________________________\n";
 		c++;
 	}
 }
