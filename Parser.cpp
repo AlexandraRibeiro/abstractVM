@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/04 20:59:41 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/05 17:29:14 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,19 +120,23 @@ void		Parser::set_parsing(void)
 			{
 				if (lex[c].token != SIGN && lex[c].token != INUM && lex[c].token != RNUM)
 					break;
-				else if (lex[c].token == SIGN && lex[c].lexeme.compare("-") == 0)
+				if (lex[c].token == SIGN && lex[c].lexeme.compare("-") == 0)
 					sign = -1;
-				else if (lex[c].token == INUM || lex[c].token != RNUM)
+				else if (lex[c].token == INUM || lex[c].token == RNUM)
 					pos++;
 			}
 			/***** Because SIGN is optional start with "if" not "else if" *****/
 			if (pos == 6)														//search value
 			{
-				if (lex[c].token != SIGN && lex[c].token != INUM && lex[c].token != RNUM)
+				if (lex[c].token != INUM && lex[c].token != RNUM)
 					break;
-				// if (sign == true)
-				// 	lex[c].lexeme.insert(0, lex[c - 1].lexeme);
-				this->_parsing[j].value = 42; //valeur en dur remplacer par un atoi
+				if ((this->_parsing[j].type != FLOAT && this->_parsing[j].type != DOUBLE) && lex[c].token == RNUM)
+				{
+					pos = 13;													//search wrong format INUM/RNUM
+					break;
+				}
+				this->_parsing[j].value = string2num(lex[c].lexeme) * sign;
+				// verif_value()
 				pos++;
 			}
 			else if (pos == 7)
@@ -165,48 +169,10 @@ void		Parser::set_parsing(void)
 			}
 		}
 	}
-	if (this->_parsing[j].instruction != EXIT)
+	if (this->_parsing[j].instruction != EXIT)									//search EXIT
 		this->set_error_verbose(j, this->_verbose[EXIT], -1);
 }
 
-
-void		Parser::set_error_verbose(int j, std::string str1, int position_lexer)
-{
-	std::ostringstream oss; //to convert int -> str
-	this->_parsing[j].error_verbose.append("------> line ");
-	oss.str(""); //to clear stream
-	oss << this->_parsing[j].line_nb;
-	this->_parsing[j].error_verbose.append(oss.str());
-	this->_parsing[j].error_verbose.append(str1);
-	if (position_lexer != -1)
-	{
-		oss.str(""); //to clear stream
-		oss << position_lexer;
-		this->_parsing[j].error_verbose.append(oss.str());
-	}
-	this->_parsing[j].error_verbose.push_back('\n');
-}
-
-
-void		Parser::debug_print_parsing(void)
-{
-	size_t c = 0;
-	std::cout << "\n**** PARSER ****\n";
-	while (c < this->_parsing.size())
-	{
-		std::cout << "line_nb = \"" << this->_parsing[c].line_nb << "\"\n";
-		std::cout << "instruction = \"" << this->_parsing[c].instruction << "\"\n";
-		std::cout << "type = \"" << this->_parsing[c].type << "\"\n";
-		std::cout << "value = \"" << this->_parsing[c].value << "\"\n";
-		std::cout << "original_line = \"" << this->_parsing[c].original_line << "\"\n";
-		std::cout << "error = \"" << this->_parsing[c].error << "\"\n";
-		std::cout << "error position lexer = \"" << this->_parsing[c].error_position_lexer << "\"\n";
-		std::cout << "error verbose = \"" << this->_parsing[c].error_verbose << "\"\n";
-		std::cout << "___________________________________________\n";
-		c++;
-	}
-
-}
 
 void		Parser::init_scanner2(int j, int line_nb, int instruction, int type,
 				int value, std::string original_line, bool error, int error_position_lexer)
@@ -245,7 +211,51 @@ int			Parser::get_type(std::string lexeme)
 	return (-1);
 }
 
+int			Parser::verif_value(int j)
+{
+	if (this->_parsing[j].type == )
+	return 14 //underflow
 
+	return 15 //overflow
+}
+
+
+void		Parser::set_error_verbose(int j, std::string str1, int position_lexer)
+{
+	std::ostringstream oss; //to convert int -> str
+	this->_parsing[j].error_verbose.append("------> line ");
+	oss.str(""); //to clear stream
+	oss << this->_parsing[j].line_nb;
+	this->_parsing[j].error_verbose.append(oss.str());
+	this->_parsing[j].error_verbose.append(str1);
+	if (position_lexer != -1)
+	{
+		oss.str(""); //to clear stream
+		oss << position_lexer;
+		this->_parsing[j].error_verbose.append(oss.str());
+	}
+	this->_parsing[j].error_verbose.push_back('\n');
+}
+
+
+void		Parser::debug_print_parsing(void)
+{
+	size_t c = 0;
+	std::cout << "\n**** PARSER ****\n";
+	while (c < this->_parsing.size())
+	{
+		std::cout << "line_nb = \"" << this->_parsing[c].line_nb << "\"\n";
+		std::cout << "instruction = \"" << this->_parsing[c].instruction << "\"\n";
+		std::cout << "type = \"" << this->_parsing[c].type << "\"\n";
+		std::cout << "value = \"" << this->_parsing[c].value << "\"\n";
+		std::cout << "original_line = \"" << this->_parsing[c].original_line << "\"\n";
+		std::cout << "error = \"" << this->_parsing[c].error << "\"\n";
+		std::cout << "error position lexer = \"" << this->_parsing[c].error_position_lexer << "\"\n";
+		std::cout << "error verbose = \"" << this->_parsing[c].error_verbose << "\"\n";
+		std::cout << "___________________________________________\n";
+		c++;
+	}
+}
 
 // STATIC _____________________________________________________________________
 const std::string		Parser::_instruct[11] = {
@@ -256,7 +266,7 @@ const std::string		Parser::_type[5] = {
 	"int8", "int16", "int32", "float", "double" };
 	/* 0  ,  1     ,  2     ,  3     ,  4       */
 
-const std::string		Parser::_verbose[13] = {
+const std::string		Parser::_verbose[16] = {
 	" : (parser) error not a valid instruction",					// pos = 0
 	"",
 	" : (parser) error after the instruction", 						// pos = 2
@@ -270,4 +280,7 @@ const std::string		Parser::_verbose[13] = {
 	" : (parser) the program doesn’t have an exit instruction",		// pos = 10 = EXIT
 	" : (parser) error expected nothing after this instruction",	// pos = 11
 	" : (parser) error find 2 'exit' instruction",					// pos = 12
+	" : (parser) error wrong type for this value (RNUM/INUM)",		// pos = 13
+	" : (parser) error underflow on the value",						// pos = 14
+	" : (parser) error overflow on the value"						// pos = 15
 };

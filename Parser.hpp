@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:30:59 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/04 19:49:55 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/05 17:20:20 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PARSER_H
 
 #include "Lexer.hpp"
-#include <sstream>
 
 enum instructions {
 	PUSH = 0,
@@ -60,12 +59,13 @@ class Parser {
 		Lexer &		get_lexer(void);
 		//parsing _____________________________________________
 		void	set_parsing(void);
-		void	set_error_verbose(int j, std::string str1, int position_lexer);
-		void	debug_print_parsing(void);
 		void	init_scanner2(int j, int line_nb, int instruction, int type, int value,
 								std::string original_line, bool error, int error_position_lexer);
 		int		get_instruction(std::string lexeme);
 		int		get_type(std::string lexeme);
+		int		verif_value();
+		void	set_error_verbose(int j, std::string str1, int position_lexer);
+		void	debug_print_parsing(void);
 	private:
 		Lexer 						*_lexer;
 		std::string					_errors;
@@ -73,7 +73,7 @@ class Parser {
 		// static ______________________________________________
 		static const std::string	_instruct[11];
 		static const std::string	_type[5];
-		static const std::string	_verbose[13];
+		static const std::string	_verbose[16];
 };
 
 #endif

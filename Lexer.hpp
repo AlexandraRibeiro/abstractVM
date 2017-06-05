@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/04 17:24:15 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/05 17:03:11 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include <sstream>
+
+long double string2num(const std::string & text);
 
 enum tokens {
 	END = 0,
