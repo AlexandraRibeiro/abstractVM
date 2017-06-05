@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/05 17:03:11 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/05 18:18:42 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@
 #include <iomanip>
 #include <fstream>
 #include <sstream>
+#include <cstdint>
+#include <cfloat>
 
 long double string2num(const std::string & text);
+int			verif_value(int type, long double value);
 
 enum tokens {
 	END = 0,
@@ -59,12 +62,10 @@ class Lexer {
 		void						debug_print_lexical(void);
 		// getter _______________________________________________
 		int							get_token(char c);
-		bool						get_errorFinded(void);
 
 	private:
 		std::vector<std::string> 	_input;
 		std::vector<s_scanner>		_lexical;
-		bool						_errorFinded;
 		// static ______________________________________________
 		static const int 			_fsm[9][9];
 };

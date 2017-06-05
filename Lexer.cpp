@@ -6,18 +6,18 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/04 20:42:44 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/05 18:18:24 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lexer.hpp"
 
 
-Lexer::Lexer(void) : _errorFinded(false) {
+Lexer::Lexer(void) {
 	std::cout << "constructor Lexer called" << std::endl;
 }
 
-Lexer::Lexer(Lexer const & cpy) : _errorFinded(false) {
+Lexer::Lexer(Lexer const & cpy) {
 	*this = cpy;
 }
 
@@ -94,7 +94,6 @@ void							Lexer::set_lexical(void)
 				{
 						this->_lexical[w].error = true;
 						this->_lexical[w].error_position_lexer = j;
-						this->_errorFinded = true;
 						stop = true;
 						break;
 				}
@@ -155,10 +154,6 @@ int		Lexer::get_token(char c) {
 		return SPACE;
 	else
 		return ERROR;
-}
-
-bool	Lexer::get_errorFinded(void) {
-	return this->_errorFinded;
 }
 
 

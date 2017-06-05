@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/05 17:29:14 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/05 18:13:16 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,8 @@ void		Parser::set_parsing(void)
 					break;
 				}
 				this->_parsing[j].value = string2num(lex[c].lexeme) * sign;
-				// verif_value()
-				pos++;
+				if ((pos = verif_value(this->_parsing[j].type, this->_parsing[j].value)) != 7)								//search overflow/underflow
+					break;
 			}
 			else if (pos == 7)
 			{
@@ -210,15 +210,6 @@ int			Parser::get_type(std::string lexeme)
 	}
 	return (-1);
 }
-
-int			Parser::verif_value(int j)
-{
-	if (this->_parsing[j].type == )
-	return 14 //underflow
-
-	return 15 //overflow
-}
-
 
 void		Parser::set_error_verbose(int j, std::string str1, int position_lexer)
 {

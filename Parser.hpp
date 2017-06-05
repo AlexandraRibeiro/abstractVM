@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:30:59 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/05 17:20:20 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/05 18:12:39 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ class Parser {
 								std::string original_line, bool error, int error_position_lexer);
 		int		get_instruction(std::string lexeme);
 		int		get_type(std::string lexeme);
-		int		verif_value();
 		void	set_error_verbose(int j, std::string str1, int position_lexer);
 		void	debug_print_parsing(void);
 	private:
