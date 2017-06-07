@@ -6,12 +6,14 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:55:48 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/07 16:03:15 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/07 19:37:41 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IOPERAND_H
 # define IOPERAND_H
+
+#include "Parser.hpp"
 
 class IOperand {
 	public:
@@ -28,3 +30,5 @@ class IOperand {
 
 		virtual ~IOperand( void ) {}
 };
+
+#endif

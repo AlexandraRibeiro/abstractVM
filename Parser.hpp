@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:30:59 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/05 18:12:39 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/07 19:36:34 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ enum instructions {
 	EXIT,		// 10
 };
 
-enum types {
+enum eOperandType {
 	INT8 = 0,
 	INT16,		// 1
 	INT32,		// 2
