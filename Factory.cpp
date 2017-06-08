@@ -12,18 +12,20 @@
 
 #include "Factory.hpp"
 
-
-Factory::Factory(void) : _op(NULL) {
+Factory::Factory(void) {
 	std::cout << "constructor Factory called" << std::endl;
+	this->_arrayPtr.push_back( & Factory::createInt8 );
+	this->_arrayPtr.push_back( & Factory::createInt16 );
+	this->_arrayPtr.push_back( & Factory::createInt32 );
+	this->_arrayPtr.push_back( & Factory::createFloat );
+	this->_arrayPtr.push_back( & Factory::createDouble );
 }
 
-Factory::Factory(Factory const & cpy) : _op(NULL) {
+Factory::Factory(Factory const & cpy) {
 	*this = cpy;
 }
 
 Factory::~Factory(void) {
-	if (this->_op != NULL)
-		delete this->_op;
 	std::cout << "destructor Factory called" << std::endl;
 }
 
@@ -31,40 +33,28 @@ Factory &			Factory::operator=(Factory const &) {
 	return *this;
 }
 
+
 IOperand const *	Factory::createOperand(eOperandType type, std::string const & value) const {
-	if (type == INT8)
-		createInt8(value);
-	else if (type == INT16)
-		createIn16(value);
-	else if (type == INT32)
-		createInt32(value);
-	else if (type == FLOAT)
-		createFloat(value);
-	else if (type == DOUBLE)
-		createDouble(value);
+	return	*(this->_arrayPtr[type]) (value);
 }
 
+//______________________________________________________________________________
 IOperand const *	Factory::createInt8(std::string const & value) const {
-	this->_op = new Operand<char>(value);
-	return (this->_op);
+	return	new Operand<char>(INT8, value, 3, *this);			//int8 precision -> max 3 digits
 }
 
 IOperand const *	Factory::createInt16(std::string const & value) const {
-	this->_op = new Operand<short>(value);
-	return (this->_op);
+	return	new Operand<short int>(INT16, value, 5, *this);		//int16 precision -> max 5 digits
 }
 
 IOperand const *	Factory::createInt32(std::string const & value) const {
-	this->_op = new Operand<std::string>(value);
-	return (this->_op);
+	return	new Operand<int>(INT32, value, 10, *this);			//int32 precision -> max 10 digits
 }
 
 IOperand const *	Factory::createFloat(std::string const & value) const {
-	this->_op = new Operand<float>(value);
-	return (this->_op);
+	return	new Operand<float>(FLOAT, value, 14, *this);		//float precision -> max 14 digits
 }
 
 IOperand const *	Factory::createDouble(std::string const & value) const {
-	this->_op = new Operand<double>(value);
-	return (this->_op);
+	return	new Operand<double>(DOUBLE, value, 17, *this);		//double precision -> max 17 digits
 }

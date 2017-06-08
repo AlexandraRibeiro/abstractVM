@@ -13,7 +13,7 @@
 #ifndef IOPERAND_H
 # define IOPERAND_H
 
-#include "Parser.hpp"
+// #include "Parser.hpp"
 
 class IOperand {
 	public:

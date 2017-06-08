@@ -14,16 +14,16 @@
 # define LEAD_H
 
 #include "Parser.hpp"
-// #include "Factory.hpp"
-// #include "IOperand.hpp"
+#include "Factory.hpp"
 
 class Lead {
 	public:
 		Lead(void);
 		Lead(Lead const & cpy);
 		~Lead(void);
-		Lead 						& operator=(Lead const &);
-		Parser						& get_parser(void);
+		Lead 			& operator=(Lead const &);
+		Parser			& get_parser(void);
+		// void			execute(void); //lance factory
 
 	private:
 		Parser 						*_parser;
