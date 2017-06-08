@@ -47,22 +47,13 @@ Parser							& Lead::get_parser(void) {
 // 	std::string		error_verbose;
 // };
 
-// enum instructions {
-
-// 	ADD,		// 4
-// 	SUB,		// 5
-// 	MUL,		// 6
-// 	DIV,		// 7
-// 	MOD,		// 8
-
-// };
-
 bool							Lead::execute(void) {
 	size_t i;
 	size_t c = 0;
 	char ascii;
-	std::ostringstream oss;
 	std::vector<s_scanner2> scan2 = this->_parser.get_parsing();
+	IOperand const * v1;
+	IOperand const * v2;
 	if (c == scan2.size())
 	{
 		std::cout << "error empty input" << std::endl;
@@ -70,11 +61,23 @@ bool							Lead::execute(void) {
 	}
 	while(c < scan2.size())
 	{
-		oss.str("");
+		if (this->_stack.empty() == false)
+		{
+			if (this->_stack.back().get_errorExe() == UNDER)
+			{
+				scan2[c].error_verbose.append(" : (execute) operand | ");
+				return false;
+			}
+
+			if (this->_stack.back().get_errorExe() == OVER)
+			if (this->_stack.back().get_errorExe() == ZEROMOD)
+			if (this->_stack.back().get_errorExe() == ZERODIV)
+
+		}
 		if (scan2[c].error == true)
 			return false;
 		if (scan2[c].instruction == PUSH)
-			this->_stack.push_back(createOperand(static_cast<eOperandType> scan2[c].type, scan2[c].value.append(oss.str())));
+			this->_stack.push_back(createOperand(static_cast<eOperandType> scan2[c].type, num2string(scan2[c].value)));
 		else if (scan2[c].instruction == POP)
 		{
 			if (this->_stack.empty() == true)
@@ -99,7 +102,7 @@ bool							Lead::execute(void) {
 				scan2[c].error_verbose.append(" : (execute) assert | empty stack");
 				return false;
 			}
-			if (this->_stack.back()->toString() != scan2[c].value.append(oss.str()))
+			if (this->_stack.back()->toString() != num2string(scan2[c].value))
 			{
 				scan2[c].error_verbose.append(" : (execute) assert | value error");
 				return false;
@@ -122,7 +125,25 @@ bool							Lead::execute(void) {
 				scan2[c].error_verbose.append(" : (execute) operand | only one value in the stack");
 				return false;
 			}
-			
+			//stock IOperand const *
+			v1 = this->_stack.back();
+			this->_stack.pop_back();
+			v2 = this->_stack.back();
+			this->_stack.pop_back();
+			//
+			if (scan2[c].instruction == ADD)
+				this->_stack.push_back(*v2 + *v1);
+			else if (scan2[c].instruction == SUB)
+				this->_stack.push_back(*v2 - *v1);
+			else if (scan2[c].instruction == MUL)
+				this->_stack.push_back(*v2 * *v1);
+			else if (scan2[c].instruction == DIV)
+				this->_stack.push_back(*v2 / *v1);
+			else if (scan2[c].instruction == MOD)
+				this->_stack.push_back(*v2 % *v1);
+			delete v1;
+			delete v2;
+			//verif error
 		}
 		else if (scan2[c].instruction == PRINT)
 		{

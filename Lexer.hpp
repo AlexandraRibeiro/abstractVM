@@ -23,6 +23,7 @@
 #include <cfloat>
 
 long double string2num(const std::string & text);
+std::string num2string(long double ld);
 int			verif_value(int type, long double value);
 
 enum tokens {
@@ -34,7 +35,7 @@ enum tokens {
 	OPEN,		// 5 = '('
 	CLOS,		// 6 = ')'
 	SPACE,		// 7 = space || tab
-	ERROR,		// 8
+	ERROR		// 8
 };
 
 struct s_scanner {

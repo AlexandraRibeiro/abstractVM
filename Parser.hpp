@@ -26,7 +26,7 @@ enum instructions {
 	DIV,		// 7
 	MOD,		// 8
 	PRINT,		// 9
-	EXIT,		// 10
+	EXIT		// 10
 };
 
 enum eOperandType {
@@ -35,6 +35,10 @@ enum eOperandType {
 	INT32,		// 2
 	FLOAT,		// 3
 	DOUBLE,		// 4
+	UNDER,		// 5 Code Error for execute Underflow
+	OVER,		// 6 Code Error for execute Overflow
+	ZEROMOD,	// 7 Code Error for execute % 0
+	ZERODIV		// 8 Code Error for execute / 0
 };
 
 struct s_scanner2 {

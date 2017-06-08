@@ -210,18 +210,11 @@ int			Parser::get_type(std::string lexeme)
 
 void		Parser::set_error_verbose(int j, std::string str1, int position_lexer)
 {
-	std::ostringstream oss; //to convert int -> str
 	this->_parsing[j].error_verbose.append("------> line ");
-	oss.str(""); //to clear stream
-	oss << this->_parsing[j].line_nb;
-	this->_parsing[j].error_verbose.append(oss.str());
+	this->_parsing[j].error_verbose.append(num2string(this->_parsing[j].line_nb));
 	this->_parsing[j].error_verbose.append(str1);
 	if (position_lexer != -1)
-	{
-		oss.str(""); //to clear stream
-		oss << position_lexer;
-		this->_parsing[j].error_verbose.append(oss.str());
-	}
+		this->_parsing[j].error_verbose.append(num2string(position_lexe));
 	this->_parsing[j].error_verbose.push_back('\n');
 }
 

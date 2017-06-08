@@ -19,6 +19,13 @@ long double string2num(const std::string & text)
 	return (ss >> result ? result : 0);
 }
 
+std::string num2string(long double ld)
+{
+	std::ostringstream oss;
+	oss << ld;
+	return (oss.str());
+}
+
 int			verif_value(int type, long double value)
 {
 	if (type != FLOAT && type != DOUBLE)

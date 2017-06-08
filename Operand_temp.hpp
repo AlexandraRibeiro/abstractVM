@@ -36,13 +36,33 @@ class Operand : public IOperand {
 		int getPrecision( void ) const;		//Precision of the type of the instance
 		eOperandType getType( void ) const;	// Type of the instance
 
-		IOperand const * operator+( IOperand const & rhs ) const;	//Sum
+		IOperand const * operator+( IOperand const & rhs ) const {					//Sum
+			eOperandType type;
+			std::string value;
+			long double val1 = string2num(this->_valueStr);
+			long double val2 = string2num(rhs.toString());
+			if (rhs.getType() >= this->getType())
+				type = rhs.getType();
+			else
+				type = this->getType();
+			val1 += val2;
+			if (verif_value(type, val1) == 14)
+				this->_errorExe = UNDER;	//code error
+			else if (verif_value(type, val1) == 15)
+				this->_errorExe = OVER;	//code error
+			value = num2string(val1);
+			return (this->_factory->createOperand( type, value ));
+		};
+
 		IOperand const * operator-( IOperand const & rhs ) const;	//Difference
 		IOperand const * operator*( IOperand const & rhs ) const;	//Product
 		IOperand const * operator/( IOperand const & rhs ) const;	//Quotient
 		IOperand const * operator%( IOperand const & rhs ) const;	//Modulo
 
 		std::string const & toString( void ) const; // String representation of the instance
+		eOperandType 		get_errorExe(void) const {
+			return this->_errorExe;
+		};
 
 
 	private:
@@ -51,6 +71,7 @@ class Operand : public IOperand {
 		std::string					_valueStr;
 		int							_precision;
 		Factory const	&			_factory;
+		eOperandType				_errorExe;
 };
 
 #endif
