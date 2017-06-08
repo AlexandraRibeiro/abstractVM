@@ -56,11 +56,8 @@ void		Parser::set_parsing(void)
 	int sign = 1;
 	bool exit_found = false;
 	std::vector<s_scanner> lex = this->_lexer->get_lexical();
-	if (c == lex.size())
-	{
-		std::cout << "error empty input" << std::endl;
+	if (c == lex.size()) //error empty input
 		return;
-	}
 	while (c < lex.size())
 	{
 		pos = 0;
@@ -247,6 +244,13 @@ void		Parser::debug_print_parsing(void)
 		c++;
 	}
 }
+
+
+std::vector<s_scanner2>		Parser::get_parsing(void) const {
+	return this->_parsing;
+}
+
+
 
 // STATIC _____________________________________________________________________
 const std::string		Parser::_instruct[11] = {

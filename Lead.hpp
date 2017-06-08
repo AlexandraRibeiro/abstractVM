@@ -23,10 +23,11 @@ class Lead {
 		~Lead(void);
 		Lead 			& operator=(Lead const &);
 		Parser			& get_parser(void);
-		// void			execute(void); //lance factory
+		bool			execute(void); //lance factory
 
 	private:
-		Parser 						*_parser;
+		Parser 							*_parser;
+		std::vector<IOperand const *>	_stack;
 };
 
 #endif

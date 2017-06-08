@@ -68,8 +68,9 @@ int				main(int ac, char **av)
 
 	parser->set_parsing();
 /* DEBUG : VERIF SCAN PARSER _____________________*/
-parser->debug_print_parsing();
+// parser->debug_print_parsing();
 
+	lead->execute() == false;
 
 
 	return (0);

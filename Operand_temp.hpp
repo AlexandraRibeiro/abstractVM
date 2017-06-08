@@ -28,7 +28,7 @@ class Operand : public IOperand {
 		Operand (Operand const & cpy) {*this = cpy;}
 		~Operand (void) {}
 		~IOperand(void) {}
-		
+
 		Operand 	& operator=(Operand const &) { 								//remplir la copie ________________________________________
 			return *this;
 		}
@@ -47,10 +47,10 @@ class Operand : public IOperand {
 
 	private:
 		Operand(void) {}
-		eOperandType		_type;
-		std::string			_valueStr;
-		int					_precision;
-		Factory const	&	_factory;
+		eOperandType				_type;
+		std::string					_valueStr;
+		int							_precision;
+		Factory const	&			_factory;
 };
 
 #endif

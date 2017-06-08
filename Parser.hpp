@@ -65,6 +65,9 @@ class Parser {
 		int		get_type(std::string lexeme);
 		void	set_error_verbose(int j, std::string str1, int position_lexer);
 		void	debug_print_parsing(void);
+
+		std::vector<s_scanner2>		get_parsing(void) const;
+
 	private:
 		Lexer 						*_lexer;
 		std::string					_errors;
