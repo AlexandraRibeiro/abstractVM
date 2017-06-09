@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:52:19 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/07 21:12:55 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/09 15:28:45 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,26 @@ Factory &			Factory::operator=(Factory const &) {
 
 
 IOperand const *	Factory::createOperand(eOperandType type, std::string const & value) const {
-	return	*(this->_arrayPtr[type]) (value);
+	return	(this->*_arrayPtr[type]) (value);
 }
 
 //______________________________________________________________________________
 IOperand const *	Factory::createInt8(std::string const & value) const {
-	return	new Operand<char>(INT8, value, 3, *this);			//int8 precision -> max 3 digits
+	return	new Operand<Factory>(INT8, value, 3, *this);			//int8 precision -> max 3 digits
 }
 
 IOperand const *	Factory::createInt16(std::string const & value) const {
-	return	new Operand<short int>(INT16, value, 5, *this);		//int16 precision -> max 5 digits
+	return	new Operand<Factory>(INT16, value, 5, *this);		//int16 precision -> max 5 digits
 }
 
 IOperand const *	Factory::createInt32(std::string const & value) const {
-	return	new Operand<int>(INT32, value, 10, *this);			//int32 precision -> max 10 digits
+	return	new Operand<Factory>(INT32, value, 10, *this);			//int32 precision -> max 10 digits
 }
 
 IOperand const *	Factory::createFloat(std::string const & value) const {
-	return	new Operand<float>(FLOAT, value, 14, *this);		//float precision -> max 14 digits
+	return	new Operand<Factory>(FLOAT, value, 14, *this);		//float precision -> max 14 digits
 }
 
 IOperand const *	Factory::createDouble(std::string const & value) const {
-	return	new Operand<double>(DOUBLE, value, 17, *this);		//double precision -> max 17 digits
+	return	new Operand<Factory>(DOUBLE, value, 17, *this);		//double precision -> max 17 digits
 }

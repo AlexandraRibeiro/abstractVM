@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:43:01 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/07 21:06:58 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/09 15:28:23 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ template<typename T>
 
 class Operand : public IOperand {
 	public:
-		Operand(eOperandType type, std::string const & value, int precision, Factory const & factory) {
+		Operand(eOperandType type, std::string const & value, int precision, T const & factory) : _factory(factory) {
 			this->_type = type;
 			this->_valueStr = value;
 			this->_precision = precision;
-			this->_factory = factory;
 		}
 		Operand (Operand const & cpy) {*this = cpy;}
 		~Operand (void) {}
@@ -46,10 +45,10 @@ class Operand : public IOperand {
 			else
 				type = this->getType();
 			val1 += val2;
-			if (verif_value(type, val1) == 14)
-				this->_errorExe = UNDER;	//code error
-			else if (verif_value(type, val1) == 15)
-				this->_errorExe = OVER;	//code error
+			// if (verif_value(type, val1) == 14)
+			// 	this->_errorExe = UNDER;	//code error
+			// else if (verif_value(type, val1) == 15)
+			// 	this->_errorExe = OVER;	//code error
 			value = num2string(val1);
 			return (this->_factory->createOperand( type, value ));
 		};
@@ -60,9 +59,6 @@ class Operand : public IOperand {
 		IOperand const * operator%( IOperand const & rhs ) const;	//Modulo
 
 		std::string const & toString( void ) const; // String representation of the instance
-		eOperandType 		get_errorExe(void) const {
-			return this->_errorExe;
-		};
 
 
 	private:
@@ -70,8 +66,7 @@ class Operand : public IOperand {
 		eOperandType				_type;
 		std::string					_valueStr;
 		int							_precision;
-		Factory const	&			_factory;
-		eOperandType				_errorExe;
+		T const	&					_factory;
 };
 
 #endif

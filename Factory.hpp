@@ -6,20 +6,19 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 19:22:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/07 21:13:14 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/09 15:31:33 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FACTORY_H
 # define FACTORY_H
 
-// #include "Lead.hpp"
-#include "IOperand.hpp"
+#include "Operand_temp.hpp"
 
 class Factory  {
 	public:
 		//create a type for the vector (pointers on member functions)
-		typedef IOperand const * (Factory::createOp)(std::string const &) const;
+		typedef IOperand const * (Factory::*createOp)(std::string const &) const;
 
 		Factory(void);
 		Factory(Factory const & cpy);
