@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/09 15:30:08 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/09 16:36:58 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ Parser							& Lead::get_parser(void) {
 
 
 bool							Lead::execute(void) {
-	// size_t i;
+	size_t i;
 	size_t c = 0;
 	// char ascii;
-	std::vector<s_scanner2> scan2 = this->_parser.get_parsing();
+	std::vector<s_scanner2> scan2 = this->_parser->get_parsing();
+	Factory factory;
 	// IOperand const * v1;
 	// IOperand const * v2;
 	if (c == scan2.size())
@@ -53,7 +54,7 @@ bool							Lead::execute(void) {
 		if (scan2[c].error == true)
 			return false;
 		if (scan2[c].instruction == PUSH)
-			this->_stack.push_back(createOperand(static_cast<eOperandType> scan2[c].type, num2string(scan2[c].value)));
+			this->_stack.push_back(factory.createOperand(static_cast<eOperandType> (scan2[c].type), num2string(scan2[c].value)));
 		// else if (scan2[c].instruction == POP)
 		// {
 		// 	if (this->_stack.empty() == true)
@@ -63,14 +64,14 @@ bool							Lead::execute(void) {
 		// 	}
 		// 	this->_stack.pop_back();
 		// }
-		// else if (scan2[c].instruction == DUMP)
-		// {
-		// 	if (this->_stack.empty() == true)
-		// 		std::cout << "Warning : (execute) dump | empty stack\n";
-		// 	i = this->_stack.size();
-		// 	while (i-- > 0)
-		// 		std::cout << this->_stack[i]->toString() << std::endl;
-		// }
+		else if (scan2[c].instruction == DUMP)
+		{
+			if (this->_stack.empty() == true)
+				std::cout << "Warning : (execute) dump | empty stack\n";
+			i = this->_stack.size();
+			while (i-- > 0)
+				std::cout << this->_stack[i]->toString() << std::endl;
+		}
 		// else if (scan2[c].instruction == ASSERT)
 		// {
 		// 	if (this->_stack.empty() == true)

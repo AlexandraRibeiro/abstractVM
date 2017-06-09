@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/07 21:14:50 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/09 15:37:01 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ void		Parser::set_error_verbose(int j, std::string str1, int position_lexer)
 	this->_parsing[j].error_verbose.append(num2string(this->_parsing[j].line_nb));
 	this->_parsing[j].error_verbose.append(str1);
 	if (position_lexer != -1)
-		this->_parsing[j].error_verbose.append(num2string(position_lexe));
+		this->_parsing[j].error_verbose.append(num2string(position_lexer));
 	this->_parsing[j].error_verbose.push_back('\n');
 }
 

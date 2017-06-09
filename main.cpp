@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/05 17:08:32 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/09 15:57:39 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int				main(int ac, char **av)
 /* DEBUG : VERIF SCAN PARSER _____________________*/
 // parser->debug_print_parsing();
 
-	lead->execute() == false;
+	if (lead.execute() == false)
+		std::cout << "execute == false\n";
 
 
 	return (0);

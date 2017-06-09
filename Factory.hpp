@@ -6,14 +6,14 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 19:22:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/09 15:31:33 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/09 15:58:45 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FACTORY_H
 # define FACTORY_H
 
-#include "Operand_temp.hpp"
+#include "IOperand.hpp"
 
 class Factory  {
 	public:
