@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:43:01 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/09 16:35:50 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/09 17:06:27 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@ template<typename T>
 class Operand : public IOperand {
 	public:
 		Operand(eOperandType type, std::string const & value, int precision, Factory const & factory) : _factory(factory) {
+			std::cout << "Operand's constructor called\n";
+
 			this->_type = type;
 			this->_valueStr = value;
 			this->_precision = precision;
 		}
 		Operand (Operand const & cpy) {*this = cpy;}
-		~Operand (void) {}
+		~Operand (void) {
+				std::cout << "Operand's destructor called\n";
+		}
 		// ~IOperand(void) {}
 
 		Operand 	& operator=(Operand const & rhs) { 								//remplir la copie ________________________________________
