@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:43:01 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/10 20:24:20 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/10 20:25:35 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ template<typename T>
 
 class Operand : public IOperand {
 	public:
-		Operand(eOperandType type, std::string const & value, int precision, Factory const & factory) : _factory(factory) {
+		Operand(eOperandType type, std::string const & value, int precision, Factory const & factory) : _factory(factory)
+		{
 			long double ld;
 			std::cout << "Operand's constructor called\n";
 			this->_type = type;
@@ -30,8 +31,11 @@ class Operand : public IOperand {
 			ld = string2num(this->_valueStr);
 			this->_valueTyped = static_cast<T>(ld);
 		}
+
 		Operand (Operand const & cpy) {*this = cpy;}
-		~Operand (void) {
+
+		~Operand (void)
+		{
 			std::cout << "Operand's destructor called\n";
 		}
 
