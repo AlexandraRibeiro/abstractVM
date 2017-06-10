@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:43:01 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/10 16:46:44 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/10 20:24:20 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "IOperand.hpp"
 #include "Factory.hpp"
+
 
 template<typename T>
 
@@ -31,10 +32,11 @@ class Operand : public IOperand {
 		}
 		Operand (Operand const & cpy) {*this = cpy;}
 		~Operand (void) {
-				std::cout << "Operand's destructor called\n";
+			std::cout << "Operand's destructor called\n";
 		}
 
-		Operand 	& operator=(Operand const & rhs) { 								//remplir la copie ________________________________________
+		Operand 	& operator=(Operand const & rhs)
+		{
 			this->_type = rhs.getType();
 			this->_valueStr = rhs.toString();
 			this->_precision = rhs.getPrecision();
@@ -43,15 +45,22 @@ class Operand : public IOperand {
 			return *this;
 		}
 
-		int getPrecision( void ) const {
-			return this->_precision;
-		}
+		// GETTER ______________________________________________________________
+		int					getPrecision( void ) const { return this->_precision; }
 
-		eOperandType getType( void ) const {
-			return this->_type;
-		}
+		eOperandType		getType( void ) const { return this->_type; }
 
-		IOperand const * operator+( IOperand const & rhs ) const {					//Sum
+		std::string const & toString( void ) const { return this->_valueStr; }
+
+		Factory const &		getFactory(void) const { return this->_factory; }
+
+		T					getValueTyped(void) const {	return this->_valueTyped; }
+
+
+
+		// SUM _________________________________________________________________
+		IOperand const * operator+( IOperand const & rhs ) const
+		{
 			std::string valueStr = "";
 			long double ldresult;
 			long long llresult;
@@ -68,31 +77,107 @@ class Operand : public IOperand {
 				ldresult = _valueTyped;
 				ldresult += string2num(rhs.toString());
 			}
-			// std::cout << "type = " << type;
-			// if (verif_value(type, ldresult) == 15)
-			// 	std::cout << "overflow\n";
-			// else if (verif_value(type, ldresult) == 14)
-			// 	std::cout << "underflow\n";
-			valueStr = num2string(ldresult, precision);
+			if (verif_value(type, ldresult) == 15)
+				valueStr = "OVER";
+			else if (verif_value(type, ldresult) == 14)
+				valueStr = "UNDER";
+			else
+				valueStr = num2string(ldresult, precision);
 			return (this->_factory.createOperand(type, valueStr));
 		}
 
-		// IOperand const * operator-( IOperand const & rhs ) const;	//Difference
-		// IOperand const * operator*( IOperand const & rhs ) const;	//Product
-		// IOperand const * operator/( IOperand const & rhs ) const;	//Quotient
-		// IOperand const * operator%( IOperand const & rhs ) const;	//Modulo
-
-		std::string const & toString( void ) const {
-			return this->_valueStr;
-		} 														// String representation of the instance
-
-		Factory const &		getFactory(void) const {
-			return this->_factory;
+		// DIFFERENCE __________________________________________________________
+		IOperand const * operator-( IOperand const & rhs ) const
+		{
+			std::string valueStr = "";
+			long double ldresult;
+			long long llresult;
+			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
+			int precision = (this->_precision >= rhs.getPrecision() ? this->_precision : rhs.getPrecision());
+			if (type < FLOAT)
+			{
+				llresult = _valueTyped;
+				llresult -= string2num(rhs.toString());
+				ldresult = llresult;
+			}
+			else
+			{
+				ldresult = _valueTyped;
+				ldresult -= string2num(rhs.toString());
+			}
+			if (verif_value(type, ldresult) == 15)
+				valueStr = "OVER";
+			else if (verif_value(type, ldresult) == 14)
+				valueStr = "UNDER";
+			else
+				valueStr = num2string(ldresult, precision);
+			return (this->_factory.createOperand(type, valueStr));
 		}
 
-		T					getValueTyped(void) const {
-			return this->_valueTyped;
+		// PRODUCT _____________________________________________________________
+		IOperand const * operator*( IOperand const & rhs ) const
+		{
+			std::string valueStr = "";
+			long double ldresult;
+			long long llresult;
+			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
+			int precision = (this->_precision >= rhs.getPrecision() ? this->_precision : rhs.getPrecision());
+			if (type < FLOAT)
+			{
+				llresult = _valueTyped;
+				llresult *= string2num(rhs.toString());
+				ldresult = llresult;
+			}
+			else
+			{
+				ldresult = _valueTyped;
+				ldresult *= string2num(rhs.toString());
+			}
+			if (verif_value(type, ldresult) == 15)
+				valueStr = "OVER";
+			else if (verif_value(type, ldresult) == 14)
+				valueStr = "UNDER";
+			else
+				valueStr = num2string(ldresult, precision);
+			return (this->_factory.createOperand(type, valueStr));
 		}
+
+		// QUOTIENT ____________________________________________________________
+		IOperand const * operator/( IOperand const & rhs ) const
+		{
+			std::string valueStr = "";
+			long double ldresult;
+			long long llresult;
+			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
+			int precision = (this->_precision >= rhs.getPrecision() ? this->_precision : rhs.getPrecision());
+			if (string2num(rhs.toString()) == 0)
+			{
+				valueStr = "ZERODIV";
+				return (this->_factory.createOperand(type, valueStr));
+			}
+			if (type < FLOAT)
+			{
+				llresult = _valueTyped;
+				llresult /= string2num(rhs.toString());
+				ldresult = llresult;
+			}
+			else
+			{
+				ldresult = _valueTyped;
+				ldresult /= string2num(rhs.toString());
+			}
+			if (verif_value(type, ldresult) == 15)
+				valueStr = "OVER";
+			else if (verif_value(type, ldresult) == 14)
+				valueStr = "UNDER";
+			else
+				valueStr = num2string(ldresult, precision);
+			return (this->_factory.createOperand(type, valueStr));
+		}
+
+		// MODULO ______________________________________________________________
+		// IOperand const * operator%( IOperand const & rhs ) const {}
+
 
 
 	private:

@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/09 17:05:05 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/10 20:21:28 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void		stock_input_cin(Lexer &l, Parser &p)
 	}
 	if (i == false)
 	{
-		p.set_errors("_______ WARNING : no \";;\" at the end of program read from standard input");
+		p.set_errors("* WARNING : no \";;\" at the end of program read from standard input");
 		std::cout << p.get_errors() << std::endl;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 19:56:03 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/10 16:42:22 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/10 19:49:49 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ long double string2num(const std::string & text)
 std::string num2string(long double ld)
 {
 	std::ostringstream oss;
-	oss << ld;
+	oss << std::setprecision(17) << ld;
 	return oss.str();
 }
 
@@ -44,17 +44,17 @@ int			verif_value(int type, long double value)
 {
 	if (type != FLOAT && type != DOUBLE)
 	{
-		if (type == INT8 && value < -128.)
+		if (type == INT8 && value < INT8_MIN)
 			return 14;
-		if (type == INT8 && value > 127.)
+		if (type == INT8 && value > INT8_MAX)
 			return 15;
-		if (type == INT16 && value < -32768.)
+		if (type == INT16 && value < INT16_MIN)
 			return 14;
-		if (type == INT16 && value > 32767.)
+		if (type == INT16 && value > INT16_MAX)
 			return 15;
-		if (type == INT32 && value < -2147483648.)
+		if (type == INT32 && value < INT32_MIN)
 			return 14;
-		if (type == INT32 && value > 2147483647.)
+		if (type == INT32 && value > INT32_MAX)
 			return 15;
 	}
 	//search underflow
