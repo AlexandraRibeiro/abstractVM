@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:30:59 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/07 19:36:34 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/10 16:43:50 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,10 @@ enum instructions {
 
 enum eOperandType {
 	INT8 = 0,
-	INT16,		// 1
-	INT32,		// 2
-	FLOAT,		// 3
-	DOUBLE,		// 4
-	UNDER,		// 5 Code Error for execute Underflow
-	OVER,		// 6 Code Error for execute Overflow
-	ZEROMOD,	// 7 Code Error for execute % 0
-	ZERODIV		// 8 Code Error for execute / 0
+	INT16,
+	INT32,
+	FLOAT,
+	DOUBLE
 };
 
 struct s_scanner2 {

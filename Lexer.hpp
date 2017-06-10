@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/05 18:18:42 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/10 16:42:14 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 long double string2num(const std::string & text);
 std::string num2string(long double ld);
+std::string num2string(long double ld, int precision);
+std::string num2string(long long ll, int precision);
 int			verif_value(int type, long double value);
 
 enum tokens {

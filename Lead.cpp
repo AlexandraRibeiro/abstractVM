@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/09 16:53:34 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/10 16:49:21 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ bool							Lead::execute(void) {
 	char ascii;
 	std::vector<s_scanner2> scan2 = this->_parser->get_parsing();
 	Factory factory;
-	// IOperand const * v1;
-	// IOperand const * v2;
+	IOperand const * v1;
+	IOperand const * v2;
 	if (c == scan2.size())
 	{
 		std::cout << "error empty input" << std::endl;
@@ -51,6 +51,15 @@ bool							Lead::execute(void) {
 	}
 	while(c < scan2.size())
 	{
+		if (this->_stack.empty() == false)
+		{
+			if (this->_stack.back()->toString().compare("OVER") == 0)
+			{
+				scan2[--c].error_verbose.append(" : (execute) operand | overflow ");
+				std::cout << "test overflow\n";
+				return false;
+			}
+		}
 		if (scan2[c].error == true)
 			return false;
 		if (scan2[c].instruction == PUSH)
@@ -90,38 +99,43 @@ bool							Lead::execute(void) {
 				return false;
 			}
 		}
-		// else if (scan2[c].instruction >= ADD && scan2[c].instruction <= MOD)
-		// {
-		// 	if (this->_stack.empty() == true)
-		// 	{
-		// 		scan2[c].error_verbose.append(" : (execute) operand | empty stack");
-		// 		return false;
-		// 	}
-		// 	if (this->_stack.size() < 2)
-		// 	{
-		// 		scan2[c].error_verbose.append(" : (execute) operand | only one value in the stack");
-		// 		return false;
-		// 	}
-		// 	//stock IOperand const *
-		// 	v1 = this->_stack.back();
-		// 	this->_stack.pop_back();
-		// 	v2 = this->_stack.back();
-		// 	this->_stack.pop_back();
-		// 	//
-		// 	if (scan2[c].instruction == ADD)
-		// 		this->_stack.push_back(*v2 + *v1);
-		// 	else if (scan2[c].instruction == SUB)
-		// 		this->_stack.push_back(*v2 - *v1);
-		// 	else if (scan2[c].instruction == MUL)
-		// 		this->_stack.push_back(*v2 * *v1);
-		// 	else if (scan2[c].instruction == DIV)
-		// 		this->_stack.push_back(*v2 / *v1);
-		// 	else if (scan2[c].instruction == MOD)
-		// 		this->_stack.push_back(*v2 % *v1);
-		// 	delete v1;
-		// 	delete v2;
-		// 	//verif error
-		// }
+		else if (scan2[c].instruction >= ADD && scan2[c].instruction <= MOD)
+		{
+			if (this->_stack.empty() == true)
+			{
+				scan2[c].error_verbose.append(" : (execute) operand | empty stack");
+				return false;
+			}
+			if (this->_stack.size() < 2)
+			{
+				scan2[c].error_verbose.append(" : (execute) operand | only one value in the stack");
+				return false;
+			}
+			//stock IOperand const *
+			v1 = this->_stack.back();
+			this->_stack.pop_back();
+			v2 = this->_stack.back();
+			this->_stack.pop_back();
+			if (scan2[c].instruction == ADD)
+				this->_stack.push_back(*v2 + *v1);
+			// else if (scan2[c].instruction == SUB)
+			// 	this->_stack.push_back(*v2 - *v1);
+			// else if (scan2[c].instruction == MUL)
+			// 	this->_stack.push_back(*v2 * *v1);
+			// else if (scan2[c].instruction == DIV)
+			// 	this->_stack.push_back(*v2 / *v1);
+			// else if (scan2[c].instruction == MOD)
+			// 	this->_stack.push_back(*v2 % *v1);
+			delete v1;
+			delete v2;
+			std::cout << "voir avant la verif" << this->_stack.back()->toString() << std::endl;
+			if (verif_value(this->_stack.back()->getType(), string2num(this->_stack.back()->toString())) == 15)
+			{
+				scan2[c].error_verbose.append(" : (execute) ADD operand | overflow ");
+				std::cout << "test overflow\n";
+				return false;
+			}
+		}
 		else if (scan2[c].instruction == PRINT)
 		{
 			if (this->_stack.empty() == true)

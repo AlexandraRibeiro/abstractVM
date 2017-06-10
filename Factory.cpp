@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:52:19 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/09 16:26:08 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/10 14:32:02 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ IOperand const *	Factory::createOperand(eOperandType type, std::string const & v
 
 //______________________________________________________________________________
 IOperand const *	Factory::createInt8(std::string const & value) const {
-	return	new Operand<int>(INT8, value, 3, *this);			//int8 precision -> max 3 digits
+	return	new Operand<char>(INT8, value, 3, *this);			//int8 precision -> max 3 digits
 }
 
 IOperand const *	Factory::createInt16(std::string const & value) const {
-	return	new Operand<int>(INT16, value, 5, *this);		//int16 precision -> max 5 digits
+	return	new Operand<short int>(INT16, value, 5, *this);		//int16 precision -> max 5 digits
 }
 
 IOperand const *	Factory::createInt32(std::string const & value) const {
@@ -53,9 +53,9 @@ IOperand const *	Factory::createInt32(std::string const & value) const {
 }
 
 IOperand const *	Factory::createFloat(std::string const & value) const {
-	return	new Operand<int>(FLOAT, value, 14, *this);		//float precision -> max 14 digits
+	return	new Operand<float>(FLOAT, value, 14, *this);		//float precision -> max 14 digits
 }
 
 IOperand const *	Factory::createDouble(std::string const & value) const {
-	return	new Operand<int>(DOUBLE, value, 17, *this);		//double precision -> max 17 digits
+	return	new Operand<double>(DOUBLE, value, 17, *this);		//double precision -> max 17 digits
 }
