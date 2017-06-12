@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 19:56:03 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/10 19:49:49 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 20:25:49 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 long double string2num(const std::string & text)
 {
 	std::stringstream ss(text);
-	long double result;
-	return (ss >> result ? result : 0);
+	long double result ;
+	// int precision = std::numeric_limits<long double>::max_digits10;
+	return ss >> result ? result : 0;
 }
 
 std::string num2string(long double ld)

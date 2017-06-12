@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 19:07:54 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 20:55:22 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ Lead::~Lead(void) {
 			delete this->_stack[c];
 			c++;
 		}
-		delete this->_stack[c];
 	}
 	if (this->_factory)
 		delete(this->_factory);
@@ -76,7 +75,9 @@ bool							Lead::execute(void) {
 				this->_parser->set_error_verbose(c, " : (execute) error pop | empty stack", -1);
 				return false;
 			}
+			v1 = this->_stack.back();
 			this->_stack.pop_back();
+			delete v1;
 		}
 		else if (scan2[c].instruction == DUMP)
 		{
