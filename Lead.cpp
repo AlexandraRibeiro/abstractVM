@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 17:16:27 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 17:27:45 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,8 @@ bool							Lead::execute(void) {
 	Factory factory;
 	IOperand const * v1;
 	IOperand const * v2;
-	if (c == scan2.size())
-	{
-		std::cout << MAGENTA << "ERROR : empty input\n" << NORMAL;
+	if (c == scan2.size()) //empty input
 		return false;
-	}
 	while(c < scan2.size())
 	{
 		if (scan2[c].error == true)
@@ -182,13 +179,13 @@ void		Lead::print_all_errors(void)
 {
 	size_t c = 0;
 	std::vector<s_scanner2> scan2 = this->_parser->get_parsing();
-	if (c < scan2.size())
-		std::cout << MAGENTA << "\nERROR(S) DETECTED" << NORMAL << std::endl;
+	std::cout << MAGENTA << "\nERROR(S) DETECTED" << NORMAL << std::endl;
+	if (c == scan2.size())
+		std::cout << YELLOW << "\tEmpty input\n" << NORMAL;
 	while (c < scan2.size())
 	{
 		if (scan2[c].error_verbose.compare("") != 0)
 			std::cout << scan2[c].error_verbose << std::endl;
 		c++;
 	}
-
 }
