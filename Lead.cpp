@@ -6,14 +6,15 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 15:16:01 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 17:05:30 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lead.hpp"
 
 Lead::Lead(void) : _parser(NULL) {
-	std::cout << "constructor Lead called" << std::endl;
+	if (DEBUG == 1)
+		std::cout << "Lead's constructor called" << std::endl;
 	this->_parser = new Parser();
 }
 
@@ -24,7 +25,8 @@ Lead::Lead(Lead const & cpy) : _parser(NULL) {
 Lead::~Lead(void) {
 	if (this->_parser)
 		delete(this->_parser);
-	std::cout << "destructor Lead called" << std::endl;
+	if (DEBUG == 1)
+		std::cout << "Lead's destructor called" << std::endl;
 }
 
 Lead &							Lead::operator=(Lead const &) {
@@ -59,7 +61,7 @@ bool							Lead::execute(void) {
 		{
 			if (this->_stack.empty() == true)
 			{
-				scan2[c].error_verbose.append("\t(execute) error pop | empty stack\n");
+				this->_parser->set_error_verbose(c, " : (execute) error pop | empty stack", -1);
 				return false;
 			}
 			this->_stack.pop_back();
@@ -76,17 +78,17 @@ bool							Lead::execute(void) {
 		{
 			if (this->_stack.empty() == true)
 			{
-				scan2[c].error_verbose.append("\t(execute) error assert | empty stack\n");
+				this->_parser->set_error_verbose(c, " : (execute) error assert | empty stack", -1);
 				return false;
 			}
 			if (this->_stack.back()->toString() != num2string(scan2[c].value))
 			{
-				scan2[c].error_verbose.append("\t(execute) error assert | value error\n");
+				this->_parser->set_error_verbose(c, " : (execute) error assert | value error", -1);
 				return false;
 			}
 			if (this->_stack.back()->getType() != static_cast<eOperandType> (scan2[c].type))
 			{
-				scan2[c].error_verbose.append("\t(execute) error assert | type error\n");
+				this->_parser->set_error_verbose(c, " : (execute) error assert | type error", -1);
 				return false;
 			}
 		}
@@ -94,12 +96,12 @@ bool							Lead::execute(void) {
 		{
 			if (this->_stack.empty() == true)
 			{
-				scan2[c].error_verbose.append("\t(execute) error operand | empty stack\n");
+				this->_parser->set_error_verbose(c, " : (execute) error operand | empty stack", -1);
 				return false;
 			}
 			if (this->_stack.size() < 2)
 			{
-				scan2[c].error_verbose.append("\t(execute) error operand | only one value in the stack\n");
+				this->_parser->set_error_verbose(c, " : (execute) error operand | only one value in the stack", -1);
 				return false;
 			}
 			v1 = this->_stack.back();
@@ -125,12 +127,12 @@ bool							Lead::execute(void) {
 		{
 			if (this->_stack.empty() == true)
 			{
-				scan2[c].error_verbose.append("\t(execute) error print | empty stack\n");
+				this->_parser->set_error_verbose(c, " : (execute) error print | empty stack", -1);
 				return false;
 			}
 			if (this->_stack.back()->getType() != INT8)
 			{
-				scan2[c].error_verbose.append("\t(execute) error print | type error\n");
+				this->_parser->set_error_verbose(c, " : (execute) error print | type error", -1);
 				return false;
 			}
 			if ((ascii = string2num(this->_stack.back()->toString())) < 0)
@@ -151,31 +153,26 @@ bool							Lead::execute(void) {
 
 bool		Lead::verif_error_operand(size_t c)
 {
-	std::vector<s_scanner2> scan2 = this->_parser->get_parsing();
 	if (this->_stack.empty() == true)
 		return true;
 	if (this->_stack.back()->toString().compare("OVER") == 0)
 	{
-		scan2[c].error_verbose.append("\t(execute) error operand | overflow\n");
-		std::cout << "test overflow\n";
+		this->_parser->set_error_verbose(c, " : (execute) error operand | overflow" , -1);
 		return false;
 	}
 	else if (this->_stack.back()->toString().compare("UNDER") == 0)
 	{
-		scan2[c].error_verbose.append("\t(execute) error operand | underflow\n");
-		std::cout << "test underflow\n";
+		this->_parser->set_error_verbose(c, " : (execute) error operand | underflow" , -1);
 		return false;
 	}
 	else if (this->_stack.back()->toString().compare("ZERODIV") == 0)
 	{
-		scan2[c].error_verbose.append("\t(execute) error operand 'div' | division with 0\n");
-		std::cout << "test zerodiv\n";
+		this->_parser->set_error_verbose(c, " : (execute) error operand 'div' | division with 0" , -1);
 		return false;
 	}
 	else if (this->_stack.back()->toString().compare("ZEROMOD") == 0)
 	{
-		scan2[c].error_verbose.append("\t(execute) error operand 'mod' | modulo with 0\n");
-		std::cout << "test zeromod\n";
+		this->_parser->set_error_verbose(c, " : (execute) error operand 'mod' | modulo with 0" , -1);
 		return false;
 	}
 	return true;
@@ -185,9 +182,12 @@ void		Lead::print_all_errors(void)
 {
 	size_t c = 0;
 	std::vector<s_scanner2> scan2 = this->_parser->get_parsing();
+	std::cout << MAGENTA << "\nERROR(S) DETECTED" << NORMAL << std::endl;
 	while (c < scan2.size())
 	{
-		std::cout << scan2[c].error_verbose << std::endl;
+		if (scan2[c].error_verbose.compare("") != 0)
+			std::cout << scan2[c].error_verbose << std::endl;
 		c++;
 	}
+
 }

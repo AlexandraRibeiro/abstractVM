@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 15:06:06 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 16:52:53 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 #include <cstdint>
 #include <cfloat>
 #include <tgmath.h>
+
+#define YELLOW	"\033[33;1m"
+#define BLUE	"\033[36;1m"
+#define MAGENTA	"\033[35;1m"
+#define GREEN	"\033[32;1m"
+#define NORMAL	"\033[0m"
+
+#define DEBUG	0
 
 long double string2num(const std::string & text);
 std::string num2string(long double ld);

@@ -6,14 +6,15 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/10 20:03:28 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 16:55:22 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Parser.hpp"
 
 Parser::Parser(void) : _lexer(NULL) {
-	std::cout << "constructor Parser called" << std::endl;
+	if (DEBUG == 1)
+		std::cout << "constructor Parser called" << std::endl;
 	this->_lexer = new Lexer();
 }
 
@@ -24,7 +25,8 @@ Parser::Parser(Parser const & cpy) : _lexer(NULL) {
 Parser::~Parser(void) {
 	if (this->_lexer)
 		delete(this->_lexer);
-	std::cout << "destructor Parser called" << std::endl;
+	if (DEBUG == 1)
+		std::cout << "destructor Parser called" << std::endl;
 }
 
 Parser &	Parser::operator=(Parser const & ) {
@@ -210,8 +212,17 @@ int			Parser::get_type(std::string lexeme)
 
 void		Parser::set_error_verbose(int j, std::string str1, int position_lexer)
 {
-	this->_parsing[j].error_verbose.append("------> line ");
-	this->_parsing[j].error_verbose.append(num2string(this->_parsing[j].line_nb));
+	if (this->_parsing[j].error_verbose.compare("") == 0)
+	{
+		this->_parsing[j].error_verbose.append(YELLOW);
+		this->_parsing[j].error_verbose.append("\t> line ");
+		this->_parsing[j].error_verbose.append(num2string(this->_parsing[j].line_nb));
+		this->_parsing[j].error_verbose.append("\t\"");
+		this->_parsing[j].error_verbose.append(this->_parsing[j].original_line);
+		this->_parsing[j].error_verbose.append("\"\n");
+		this->_parsing[j].error_verbose.append(NORMAL);
+	}
+	this->_parsing[j].error_verbose.push_back('\t');
 	this->_parsing[j].error_verbose.append(str1);
 	if (position_lexer != -1)
 		this->_parsing[j].error_verbose.append(num2string(position_lexer));

@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:43:01 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 15:05:01 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 16:58:34 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ class Operand : public IOperand {
 		Operand(eOperandType type, std::string const & value, int precision, Factory const & factory) : _factory(factory)
 		{
 			long double ld;
-			std::cout << "Operand's constructor called\n";
+			if (DEBUG == 1)
+				std::cout << "Operand's constructor called\n";
 			this->_type = type;
 			this->_valueStr = value;
 			this->_precision = precision;
@@ -36,7 +37,8 @@ class Operand : public IOperand {
 
 		~Operand (void)
 		{
-			std::cout << "Operand's destructor called\n";
+			if (DEBUG == 1)
+				std::cout << "Operand's destructor called\n";
 		}
 
 		Operand 	& operator=(Operand const & rhs)
