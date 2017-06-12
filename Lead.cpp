@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 17:05:30 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 17:16:27 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool							Lead::execute(void) {
 	IOperand const * v2;
 	if (c == scan2.size())
 	{
-		std::cout << "ERROR : empty input\n";
+		std::cout << MAGENTA << "ERROR : empty input\n" << NORMAL;
 		return false;
 	}
 	while(c < scan2.size())
@@ -69,7 +69,7 @@ bool							Lead::execute(void) {
 		else if (scan2[c].instruction == DUMP)
 		{
 			if (this->_stack.empty() == true)
-				std::cout << "* Warning : (execute) error dump | empty stack\n";
+				std::cout << YELLOW << "* Warning : (execute) error dump | empty stack\n" << NORMAL;
 			i = this->_stack.size();
 			while (i-- > 0)
 				std::cout << this->_stack[i]->toString() << std::endl;
@@ -136,11 +136,11 @@ bool							Lead::execute(void) {
 				return false;
 			}
 			if ((ascii = string2num(this->_stack.back()->toString())) < 0)
-				std::cout << "* Warning : (execute) error print | not printable value < 0\n";
+				std::cout << YELLOW << "* Warning : (execute) error print | not printable value < 0\n" << NORMAL;
 			else if (ascii == 127)
-				std::cout << "* Warning : (execute) error print | not printable value = 127\n";
+				std::cout << YELLOW << "* Warning : (execute) error print | not printable value = 127\n" << NORMAL;
 			else if (ascii < 32)
-				std::cout << "* Warning : (execute) error print | not printable value < 32\n";
+				std::cout << YELLOW << "* Warning : (execute) error print | not printable value < 32\n" << NORMAL;
 			std::cout << ascii << std::endl;
 		}
 		else if (scan2[c].instruction == EXIT)
@@ -182,7 +182,8 @@ void		Lead::print_all_errors(void)
 {
 	size_t c = 0;
 	std::vector<s_scanner2> scan2 = this->_parser->get_parsing();
-	std::cout << MAGENTA << "\nERROR(S) DETECTED" << NORMAL << std::endl;
+	if (c < scan2.size())
+		std::cout << MAGENTA << "\nERROR(S) DETECTED" << NORMAL << std::endl;
 	while (c < scan2.size())
 	{
 		if (scan2[c].error_verbose.compare("") != 0)

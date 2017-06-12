@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 16:55:22 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 17:21:50 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,6 @@ Parser &	Parser::operator=(Parser const & ) {
 	return *this;
 }
 
-// ERRORS _____________________________________________________________________
-std::string	Parser::get_errors(void) const {
-		return (this->_errors);
-}
-
-void		Parser::set_errors(std::string str) {
-		this->_errors.append(str);
-		this->_errors.push_back('\n');
-}
 
 // LEXER ______________________________________________________________________
 Lexer &		Parser::get_lexer(void) {

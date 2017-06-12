@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:30:59 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/10 19:44:41 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 17:21:40 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ class Parser {
 		Parser(Parser const & cpy);
 		~Parser(void);
 		Parser &	operator=(Parser const & );
-		std::string	get_errors(void) const;
-		void		set_errors(std::string str);
 		Lexer &		get_lexer(void);
 		//parsing _____________________________________________
 		void	set_parsing(void);
