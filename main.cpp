@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/10 20:21:28 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 15:16:42 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int				main(int ac, char **av)
 // parser->debug_print_parsing();
 
 	if (lead.execute() == false)
-		std::cout << "execute == false\n";
+		lead.print_all_errors();
 
 
 	return (0);

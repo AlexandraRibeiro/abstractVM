@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:43:01 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/10 20:25:35 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 15:05:01 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,40 @@ class Operand : public IOperand {
 			return (this->_factory.createOperand(type, valueStr));
 		}
 
-		// MODULO ______________________________________________________________
-		// IOperand const * operator%( IOperand const & rhs ) const {}
+		//MODULO ______________________________________________________________
+		IOperand const * operator%( IOperand const & rhs ) const
+		{
+			std::string valueStr = "";
+			long double ldresult;
+			long long llresult1;
+			long long llresult2;
+			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
+			int precision = (this->_precision >= rhs.getPrecision() ? this->_precision : rhs.getPrecision());
+			if (string2num(rhs.toString()) == 0)
+			{
+				valueStr = "ZEROMOD";
+				return (this->_factory.createOperand(type, valueStr));
+			}
+			if (type < FLOAT)
+			{
+				llresult1 = _valueTyped;
+				llresult2 = string2num(rhs.toString());
+				llresult1 = llresult1 % llresult2;
+				ldresult = llresult1;
+			}
+			else
+			{
+				ldresult = _valueTyped;
+				ldresult = fmod(ldresult, string2num(rhs.toString()));
+			}
+			if (verif_value(type, ldresult) == 15)
+				valueStr = "OVER";
+			else if (verif_value(type, ldresult) == 14)
+				valueStr = "UNDER";
+			else
+				valueStr = num2string(ldresult, precision);
+			return (this->_factory.createOperand(type, valueStr));
+		}
 
 
 

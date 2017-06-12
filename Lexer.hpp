@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/10 19:43:40 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 15:06:06 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <sstream>
 #include <cstdint>
 #include <cfloat>
+#include <tgmath.h>
 
 long double string2num(const std::string & text);
 std::string num2string(long double ld);

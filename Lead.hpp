@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:34 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/10 16:40:53 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 15:15:43 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include "Parser.hpp"
 #include "Factory.hpp"
-// #include "Operand_temp.hpp"
 
 class Lead {
 	public:
@@ -24,7 +23,9 @@ class Lead {
 		~Lead(void);
 		Lead 			& operator=(Lead const &);
 		Parser			& get_parser(void);
-		bool			execute(void); //lance factory
+		bool			execute(void);
+		bool			verif_error_operand(size_t c);
+		void			print_all_errors(void);
 
 	private:
 		Parser 							*_parser;

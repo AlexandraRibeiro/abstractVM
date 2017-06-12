@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/10 20:21:18 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 15:16:01 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,11 @@ bool							Lead::execute(void) {
 				this->_stack.push_back(*v2 * *v1);
 			else if (scan2[c].instruction == DIV)
 				this->_stack.push_back(*v2 / *v1);
-			// else if (scan2[c].instruction == MOD)
-			// 	this->_stack.push_back(*v2 % *v1);
+			else if (scan2[c].instruction == MOD)
+				this->_stack.push_back(*v2 % *v1);
 			delete v1;
 			delete v2;
-			if (verif_error_operand() == false)
+			if (verif_error_operand(c) == false)
 				return false;
 		}
 		else if (scan2[c].instruction == PRINT)
@@ -149,33 +149,45 @@ bool							Lead::execute(void) {
 
 }
 
-bool		verif_error_operand()
+bool		Lead::verif_error_operand(size_t c)
 {
+	std::vector<s_scanner2> scan2 = this->_parser->get_parsing();
 	if (this->_stack.empty() == true)
 		return true;
-	if (this->_stack.back()->toString().compare("OVER")) == 0)
+	if (this->_stack.back()->toString().compare("OVER") == 0)
 	{
 		scan2[c].error_verbose.append("\t(execute) error operand | overflow\n");
-		// std::cout << "test overflow\n";
+		std::cout << "test overflow\n";
 		return false;
 	}
-	else if (this->_stack.back()->toString().compare("UNDER")) == 0)
+	else if (this->_stack.back()->toString().compare("UNDER") == 0)
 	{
 		scan2[c].error_verbose.append("\t(execute) error operand | underflow\n");
-		// std::cout << "test underflow\n";
+		std::cout << "test underflow\n";
 		return false;
 	}
-	else if (this->_stack.back()->toString().compare("ZERODIV")) == 0)
+	else if (this->_stack.back()->toString().compare("ZERODIV") == 0)
 	{
 		scan2[c].error_verbose.append("\t(execute) error operand 'div' | division with 0\n");
-		// std::cout << "test underflow\n";
+		std::cout << "test zerodiv\n";
 		return false;
 	}
-	else if (this->_stack.back()->toString().compare("ZEROMOD")) == 0)
+	else if (this->_stack.back()->toString().compare("ZEROMOD") == 0)
 	{
 		scan2[c].error_verbose.append("\t(execute) error operand 'mod' | modulo with 0\n");
-		// std::cout << "test underflow\n";
+		std::cout << "test zeromod\n";
 		return false;
 	}
 	return true;
+}
+
+void		Lead::print_all_errors(void)
+{
+	size_t c = 0;
+	std::vector<s_scanner2> scan2 = this->_parser->get_parsing();
+	while (c < scan2.size())
+	{
+		std::cout << scan2[c].error_verbose << std::endl;
+		c++;
+	}
 }
