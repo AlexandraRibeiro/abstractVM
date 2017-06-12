@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 17:21:50 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 18:50:36 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 Parser::Parser(void) : _lexer(NULL) {
 	if (DEBUG == 1)
-		std::cout << "constructor Parser called" << std::endl;
+		std::cout << "Parser's constructor called" << std::endl;
 	this->_lexer = new Lexer();
 }
 
@@ -26,7 +26,7 @@ Parser::~Parser(void) {
 	if (this->_lexer)
 		delete(this->_lexer);
 	if (DEBUG == 1)
-		std::cout << "destructor Parser called" << std::endl;
+		std::cout << "Parser's destructor called" << std::endl;
 }
 
 Parser &	Parser::operator=(Parser const & ) {

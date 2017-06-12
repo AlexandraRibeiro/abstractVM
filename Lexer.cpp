@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 16:54:28 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 18:50:11 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 Lexer::Lexer(void) {
 	if (DEBUG == 1)
-		std::cout << "constructor Lexer called" << std::endl;
+		std::cout << "Lexer's constructor called" << std::endl;
 }
 
 Lexer::Lexer(Lexer const & cpy) {
@@ -24,7 +24,7 @@ Lexer::Lexer(Lexer const & cpy) {
 
 Lexer::~Lexer(void) {
 	if (DEBUG == 1)
-		std::cout << "destructor Lexer called" << std::endl;
+		std::cout << "Lexer's destructor called" << std::endl;
 }
 
 Lexer &		Lexer::operator=(Lexer const & ) {

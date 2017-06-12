@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:34 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 15:15:43 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 19:08:09 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ class Lead {
 		~Lead(void);
 		Lead 			& operator=(Lead const &);
 		Parser			& get_parser(void);
+		Factory			& get_factory(void);
 		bool			execute(void);
 		bool			verif_error_operand(size_t c);
 		void			print_all_errors(void);
 
 	private:
 		Parser 							*_parser;
+		Factory							*_factory;
 		std::vector<IOperand const *>	_stack;
 };
 

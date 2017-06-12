@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 16:52:53 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 18:33:02 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 #define GREEN	"\033[32;1m"
 #define NORMAL	"\033[0m"
 
-#define DEBUG	0
+#define DEBUG	1
 
 long double string2num(const std::string & text);
 std::string num2string(long double ld);

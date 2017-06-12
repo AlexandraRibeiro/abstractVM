@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 17:27:45 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/12 19:07:54 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,18 @@ Lead::Lead(Lead const & cpy) : _parser(NULL) {
 }
 
 Lead::~Lead(void) {
+	size_t c = 0;
+	if (c < this->_stack.size())
+	{
+		while (c < this->_stack.size())
+		{
+			delete this->_stack[c];
+			c++;
+		}
+		delete this->_stack[c];
+	}
+	if (this->_factory)
+		delete(this->_factory);
 	if (this->_parser)
 		delete(this->_parser);
 	if (DEBUG == 1)
@@ -37,13 +49,16 @@ Parser							& Lead::get_parser(void) {
 	return *this->_parser;
 }
 
+Factory							& Lead::get_factory(void) {
+	return *this->_factory;
+}
 
 bool							Lead::execute(void) {
+	this->_factory = new Factory();
 	size_t i;
 	size_t c = 0;
 	char ascii;
 	std::vector<s_scanner2> scan2 = this->_parser->get_parsing();
-	Factory factory;
 	IOperand const * v1;
 	IOperand const * v2;
 	if (c == scan2.size()) //empty input
@@ -53,7 +68,7 @@ bool							Lead::execute(void) {
 		if (scan2[c].error == true)
 			return false;
 		if (scan2[c].instruction == PUSH)
-			this->_stack.push_back(factory.createOperand(static_cast<eOperandType>(scan2[c].type), num2string(scan2[c].value)));
+			this->_stack.push_back(this->_factory->createOperand(static_cast<eOperandType>(scan2[c].type), num2string(scan2[c].value)));
 		else if (scan2[c].instruction == POP)
 		{
 			if (this->_stack.empty() == true)
