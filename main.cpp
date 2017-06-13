@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 18:18:00 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 18:28:47 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int				main(int ac, char **av)
 		std::cout << YELLOW << e.what() << NORMAL << std::endl;
 	}
 	catch (std::exception & exception) {
-		std::cerr << MAGENTA << "\nSome other std::exception occured " << NORMAL << std::endl;;
+		std::cerr << MAGENTA << "\nSome other std::exception occured" << NORMAL << std::endl;;
 		std::cerr << YELLOW << "\t" << exception.what() << NORMAL << std::endl;
 		return 1;
 	}
@@ -82,10 +82,11 @@ int				main(int ac, char **av)
 			catch (BaseException & e) {
 				std::cout << MAGENTA << e.what() << NORMAL << std::endl;
 				lead.print_all_errors(); 		// bonus print all errors
+				return 1;
 			}
 			catch (std::exception & exception) {
-				std::cerr << MAGENTA << "\nSome other std::exception occured " << NORMAL << std::endl;;
-				std::cerr << YELLOW << "\t" << exception.what() << NORMAL << std::endl;
+				std::cerr << "\nSome other std::exception occured :\n";
+				std::cerr << "\t" << exception.what() << std::endl;
 				return 1;
 			}
 			////////////////////////////////////////////////////////////////////
@@ -95,8 +96,8 @@ int				main(int ac, char **av)
 			std::cout << YELLOW << e.what() << NORMAL << std::endl;
 		}
 		catch (std::exception & exception) {
-			std::cerr << MAGENTA << "\nSome other std::exception occured " << NORMAL << std::endl;;
-			std::cerr << YELLOW << "\t" << exception.what() << NORMAL << std::endl;
+			std::cerr << "\nSome other std::exception occured :\n";
+			std::cerr << "\t" << exception.what() << std::endl;
 			return 1;
 		}
 		////////////////////////////////////////////////////////////////////////
@@ -106,8 +107,8 @@ int				main(int ac, char **av)
 		std::cout << YELLOW << e.what() << NORMAL << std::endl;
 	}
 	catch (std::exception & exception) {
-		std::cerr << MAGENTA << "\nSome other std::exception occured " << NORMAL << std::endl;;
-		std::cerr << YELLOW << "\t" << exception.what() << NORMAL << std::endl;
+		std::cerr << "\nSome other std::exception occured :\n";
+		std::cerr << "\t" << exception.what() << std::endl;
 		return 1;
 	}
 	////////////////////////////////////////////////////////////////////////////

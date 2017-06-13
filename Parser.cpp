@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 18:02:54 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 18:25:36 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		Parser::set_parsing(void)
 		{
 			if (lex[c].error == true)
 			{
-				pos = 20; //dit qu'il y a une erreur lexer
+				pos = 20;
 				this->_parsing[j].error_position_lexer = lex[c].error_position_lexer;
 				break;
 			}
