@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 18:28:47 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 21:29:54 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int				main(int ac, char **av)
 		std::cerr << YELLOW << "\t" << exception.what() << NORMAL << std::endl;
 		return 1;
 	}
-	////////////////////////////////////////////////////////////////////////////
 
-	// LEXER ___________________________________________________________________
+
+	// LEXER ///////////////////////////////////////////////////////////////////
 	try
 	{
 		lexer->set_lexical();
@@ -75,7 +75,7 @@ int				main(int ac, char **av)
 		try
 		{
 			parser->set_parsing();
-			// EXECUTE _________________________________________________________
+			// EXECUTE - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			try {
 				lead.execute();
 			}
@@ -89,7 +89,7 @@ int				main(int ac, char **av)
 				std::cerr << "\t" << exception.what() << std::endl;
 				return 1;
 			}
-			////////////////////////////////////////////////////////////////////
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		catch (BaseException & e) {
 			std::cout << MAGENTA << "\nERROR(S) DETECTED" << NORMAL << std::endl;
@@ -100,7 +100,7 @@ int				main(int ac, char **av)
 			std::cerr << "\t" << exception.what() << std::endl;
 			return 1;
 		}
-		////////////////////////////////////////////////////////////////////////
+		//______________________________________________________________________
 	}
 	catch (BaseException & e) {
 		std::cout << MAGENTA << "\nERROR(S) DETECTED" << NORMAL << std::endl;
@@ -111,7 +111,7 @@ int				main(int ac, char **av)
 		std::cerr << "\t" << exception.what() << std::endl;
 		return 1;
 	}
-	////////////////////////////////////////////////////////////////////////////
+	// /////////////////////////////////////////////////////////////////////////
 
 	return (0);
 }

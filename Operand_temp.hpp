@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:43:01 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 19:50:16 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 21:42:40 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ class Operand : public IOperand {
 			long double ldresult;
 			long long llresult;
 			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
-			int precision = (this->_precision >= rhs.getPrecision() ? this->_precision : rhs.getPrecision());
 			if (type < FLOAT)
 			{
 				llresult = _valueTyped;
@@ -88,7 +87,7 @@ class Operand : public IOperand {
 			else if (verif_value(type, ldresult) == 14)
 				valueStr = "UNDER";
 			else
-				valueStr = num2string(ldresult, precision);
+				valueStr = num2string_trunc(ldresult, type);
 			return (this->_factory.createOperand(type, valueStr));
 		}
 
@@ -99,7 +98,6 @@ class Operand : public IOperand {
 			long double ldresult;
 			long long llresult;
 			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
-			int precision = (this->_precision >= rhs.getPrecision() ? this->_precision : rhs.getPrecision());
 			if (type < FLOAT)
 			{
 				llresult = _valueTyped;
@@ -116,7 +114,7 @@ class Operand : public IOperand {
 			else if (verif_value(type, ldresult) == 14)
 				valueStr = "UNDER";
 			else
-				valueStr = num2string(ldresult, precision);
+				valueStr = num2string_trunc(ldresult, type);
 			return (this->_factory.createOperand(type, valueStr));
 		}
 
@@ -127,7 +125,6 @@ class Operand : public IOperand {
 			long double ldresult;
 			long long llresult;
 			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
-			int precision = (this->_precision >= rhs.getPrecision() ? this->_precision : rhs.getPrecision());
 			if (type < FLOAT)
 			{
 				llresult = _valueTyped;
@@ -144,7 +141,7 @@ class Operand : public IOperand {
 			else if (verif_value(type, ldresult) == 14)
 				valueStr = "UNDER";
 			else
-				valueStr = num2string(ldresult, precision);
+				valueStr = num2string_trunc(ldresult, type);
 			return (this->_factory.createOperand(type, valueStr));
 		}
 
@@ -155,7 +152,6 @@ class Operand : public IOperand {
 			long double ldresult;
 			long long llresult;
 			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
-			int precision = (this->_precision >= rhs.getPrecision() ? this->_precision : rhs.getPrecision());
 			if (string2num(rhs.toString()) == 0)
 			{
 				valueStr = "ZERODIV";
@@ -177,7 +173,7 @@ class Operand : public IOperand {
 			else if (verif_value(type, ldresult) == 14)
 				valueStr = "UNDER";
 			else
-				valueStr = num2string(ldresult, precision);
+				valueStr = num2string_trunc(ldresult, type);
 			return (this->_factory.createOperand(type, valueStr));
 		}
 
@@ -189,7 +185,6 @@ class Operand : public IOperand {
 			long long llresult1;
 			long long llresult2;
 			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
-			int precision = (this->_precision >= rhs.getPrecision() ? this->_precision : rhs.getPrecision());
 			if (string2num(rhs.toString()) == 0)
 			{
 				valueStr = "ZEROMOD";
@@ -212,7 +207,7 @@ class Operand : public IOperand {
 			else if (verif_value(type, ldresult) == 14)
 				valueStr = "UNDER";
 			else
-				valueStr = num2string(ldresult, precision);
+				valueStr = num2string_trunc(ldresult, type);
 			return (this->_factory.createOperand(type, valueStr));
 		}
 

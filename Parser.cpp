@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 18:25:36 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 21:45:34 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ void		Parser::set_error_verbose(int j, std::string str1, int position_lexer)
 	{
 		this->_parsing[j].error_verbose.append(YELLOW);
 		this->_parsing[j].error_verbose.append("\t> line ");
-		this->_parsing[j].error_verbose.append(num2string(this->_parsing[j].line_nb));
+		this->_parsing[j].error_verbose.append(num2string_trunc(this->_parsing[j].line_nb, INT8));
 		this->_parsing[j].error_verbose.append("\t\"");
 		this->_parsing[j].error_verbose.append(this->_parsing[j].original_line);
 		this->_parsing[j].error_verbose.append("\"\n");
@@ -216,7 +216,7 @@ void		Parser::set_error_verbose(int j, std::string str1, int position_lexer)
 	this->_parsing[j].error_verbose.push_back('\t');
 	this->_parsing[j].error_verbose.append(str1);
 	if (position_lexer != -1)
-		this->_parsing[j].error_verbose.append(num2string(position_lexer));
+		this->_parsing[j].error_verbose.append(num2string_trunc(position_lexer, INT8));
 	this->_parsing[j].error_verbose.push_back('\n');
 }
 

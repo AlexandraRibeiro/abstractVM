@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 19:56:03 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 20:25:49 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 21:56:43 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,27 @@ long double string2num(const std::string & text)
 {
 	std::stringstream ss(text);
 	long double result ;
-	// int precision = std::numeric_limits<long double>::max_digits10;
 	return ss >> result ? result : 0;
 }
 
-std::string num2string(long double ld)
+std::string num2string_trunc(long double ld, int type)
 {
 	std::ostringstream oss;
-	oss << std::setprecision(17) << ld;
+	if (type == FLOAT)
+		oss << std::setprecision(FL_PRECIS) << ld;
+	else if (type == DOUBLE)
+		oss << std::setprecision(DB_PRECIS) << ld;
+	else
+		oss << ld;
 	return oss.str();
 }
 
-std::string num2string(long double ld, int precision)
-{
-	std::ostringstream oss;
-	oss << std::setprecision(precision) << ld;
-	return oss.str();
-}
-
-std::string num2string(long long ll, int precision)
-{
-	std::ostringstream oss;
-	oss << std::setprecision(precision) << ll;
-	return oss.str();
-}
+// std::string num2string(long long ll, int precision)
+// {
+// 	std::ostringstream oss;
+// 	oss << std::setprecision(precision) << ll;
+// 	return oss.str();
+// }
 
 int			verif_value(int type, long double value)
 {

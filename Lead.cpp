@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 18:15:25 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 21:51:55 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void							Lead::execute(void) {
 		if (scan2[c].error == true)
 			throw BaseException("ERROR(S) DETECTED");
 		if (scan2[c].instruction == PUSH)
-			this->_stack.push_back(this->_factory->createOperand(static_cast<eOperandType>(scan2[c].type), num2string(scan2[c].value)));
+			this->_stack.push_back(this->_factory->createOperand(static_cast<eOperandType>(scan2[c].type), num2string_trunc(scan2[c].value, scan2[c].type)));
 		else if (scan2[c].instruction == POP)
 		{
 			if (this->_stack.empty() == true)
@@ -94,8 +94,10 @@ void							Lead::execute(void) {
 				this->_parser->set_error_verbose(c, " : (execute) error assert | empty stack", -1);
 				throw BaseException("ERROR(S) DETECTED");
 			}
-			if (this->_stack.back()->toString() != num2string(scan2[c].value))
+			if (this->_stack.back()->toString() != num2string_trunc(scan2[c].value, scan2[c].type))
 			{
+	std::cout << "1 = " << this->_stack.back()->toString() << std::endl;
+	std::cout << "2 = " << num2string_trunc(scan2[c].value, scan2[c].type) << std::endl;
 				this->_parser->set_error_verbose(c, " : (execute) error assert | value error", -1);
 				throw BaseException("ERROR(S) DETECTED");
 			}

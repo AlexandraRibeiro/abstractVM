@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 16:35:04 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 17:06:07 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 21:46:11 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@
 # define GREEN		"\033[32;1m"
 # define NORMAL		"\033[0m"
 
+# define FL_PRECIS	std::numeric_limits<float>::digits10
+# define DB_PRECIS	std::numeric_limits<double>::digits10
+# define LDB_PRECIS	std::numeric_limits<long double>::digits10
+
 # define DEBUG	1
 
 long double string2num(const std::string & text);
-std::string num2string(long double ld);
-std::string num2string(long double ld, int precision);
-std::string num2string(long long ll, int precision);
+std::string num2string_trunc(long double ld, int type);
+// std::string num2string(long long ll);
 int			verif_value(int type, long double value);
 
 

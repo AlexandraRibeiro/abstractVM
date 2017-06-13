@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:52:19 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 20:44:52 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 21:37:37 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ IOperand const *	Factory::createInt32(std::string const & value) const {
 }
 
 IOperand const *	Factory::createFloat(std::string const & value) const {
-	return	new Operand<float>(FLOAT, value, 14, *this);		//float precision -> max 14 digits
+	return	new Operand<float>(FLOAT, value, FL_PRECIS, *this);
 }
 
 IOperand const *	Factory::createDouble(std::string const & value) const {
-	return	new Operand<double>(DOUBLE, value, 17, *this);		//double precision -> max 17 digits
+	return	new Operand<double>(DOUBLE, value, DB_PRECIS, *this);
 }
