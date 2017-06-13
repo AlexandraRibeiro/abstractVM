@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 21:51:55 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 22:00:05 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ void							Lead::execute(void) {
 			}
 			if (this->_stack.back()->toString() != num2string_trunc(scan2[c].value, scan2[c].type))
 			{
-	std::cout << "1 = " << this->_stack.back()->toString() << std::endl;
-	std::cout << "2 = " << num2string_trunc(scan2[c].value, scan2[c].type) << std::endl;
 				this->_parser->set_error_verbose(c, " : (execute) error assert | value error", -1);
 				throw BaseException("ERROR(S) DETECTED");
 			}
