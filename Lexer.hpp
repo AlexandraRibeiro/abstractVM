@@ -6,36 +6,14 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 19:09:45 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 17:06:20 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <iomanip>
-#include <fstream>
-#include <sstream>
-#include <cstdint>
-#include <cfloat>
-#include <tgmath.h>
-
-#define YELLOW	"\033[33;1m"
-#define BLUE	"\033[36;1m"
-#define MAGENTA	"\033[35;1m"
-#define GREEN	"\033[32;1m"
-#define NORMAL	"\033[0m"
-
-#define DEBUG	1
-
-long double string2num(const std::string & text);
-std::string num2string(long double ld);
-std::string num2string(long double ld, int precision);
-std::string num2string(long long ll, int precision);
-int			verif_value(int type, long double value);
+# include "BaseException.hpp"
 
 enum tokens {
 	END = 0,

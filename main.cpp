@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 18:37:53 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 18:18:00 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void		stock_input_cin(Lexer &l)
 			l.set_input(buff);
 	}
 	if (i == false)
-		std::cout << YELLOW << "* WARNING : no \";;\" at the end of program read from standard input\n" << NORMAL;
+		throw BaseException("* WARNING : no \";;\" at the end of program read from standard input");
 }
 
 static void		stock_input_file(char *filename, Lexer &l)
@@ -47,29 +47,70 @@ int				main(int ac, char **av)
 	Lead lead;
 	Parser *parser;
 	Lexer *lexer;
-
 	parser = &lead.get_parser();
 	lexer = &parser->get_lexer();
 
-	if (ac > 1)
-		stock_input_file(av[1], *lexer);
-	else
-		stock_input_cin(*lexer);
+	// GET INPUT _______________________________________________________________
+	try {
+		if (ac > 1)
+			stock_input_file(av[1], *lexer);
+		else
+			stock_input_cin(*lexer);
+	}
+	catch (BaseException & e) {
+		std::cout << YELLOW << e.what() << NORMAL << std::endl;
+	}
+	catch (std::exception & exception) {
+		std::cerr << MAGENTA << "\nSome other std::exception occured " << NORMAL << std::endl;;
+		std::cerr << YELLOW << "\t" << exception.what() << NORMAL << std::endl;
+		return 1;
+	}
+	////////////////////////////////////////////////////////////////////////////
 
-	lexer->set_lexical();
-/* DEBUG : VERIF SCAN LEXER _____________________*/
-// lexer->debug_print_lexical();
-/* DEBUG : VERIF DEALLOC VECTOR _input dans Lexer _____________________*/
-// std::cout << "test dealloc vector" << std::endl;
-// lexer->debug_print_input();
-
-	parser->set_parsing();
-/* DEBUG : VERIF SCAN PARSER _____________________*/
-// parser->debug_print_parsing();
-
-	if (lead.execute() == false)
-		lead.print_all_errors();
-
+	// LEXER ___________________________________________________________________
+	try
+	{
+		lexer->set_lexical();
+		// PARSER ______________________________________________________________
+		try
+		{
+			parser->set_parsing();
+			// EXECUTE _________________________________________________________
+			try {
+				lead.execute();
+			}
+			catch (BaseException & e) {
+				std::cout << MAGENTA << e.what() << NORMAL << std::endl;
+				lead.print_all_errors(); 		// bonus print all errors
+			}
+			catch (std::exception & exception) {
+				std::cerr << MAGENTA << "\nSome other std::exception occured " << NORMAL << std::endl;;
+				std::cerr << YELLOW << "\t" << exception.what() << NORMAL << std::endl;
+				return 1;
+			}
+			////////////////////////////////////////////////////////////////////
+		}
+		catch (BaseException & e) {
+			std::cout << MAGENTA << "\nERROR(S) DETECTED" << NORMAL << std::endl;
+			std::cout << YELLOW << e.what() << NORMAL << std::endl;
+		}
+		catch (std::exception & exception) {
+			std::cerr << MAGENTA << "\nSome other std::exception occured " << NORMAL << std::endl;;
+			std::cerr << YELLOW << "\t" << exception.what() << NORMAL << std::endl;
+			return 1;
+		}
+		////////////////////////////////////////////////////////////////////////
+	}
+	catch (BaseException & e) {
+		std::cout << MAGENTA << "\nERROR(S) DETECTED" << NORMAL << std::endl;
+		std::cout << YELLOW << e.what() << NORMAL << std::endl;
+	}
+	catch (std::exception & exception) {
+		std::cerr << MAGENTA << "\nSome other std::exception occured " << NORMAL << std::endl;;
+		std::cerr << YELLOW << "\t" << exception.what() << NORMAL << std::endl;
+		return 1;
+	}
+	////////////////////////////////////////////////////////////////////////////
 
 	return (0);
 }

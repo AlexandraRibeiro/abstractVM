@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 20:27:29 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 18:02:54 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void		Parser::set_parsing(void)
 	int sign = 1;
 	bool exit_found = false;
 	std::vector<s_scanner> lex = this->_lexer->get_lexical();
-	if (c == lex.size()) //error empty input
-		return;
+	if (c == lex.size())
+		throw BaseException("\t(parser) Empty input!");
 	while (c < lex.size())
 	{
 		pos = 0;

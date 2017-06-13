@@ -6,13 +6,14 @@
 #    By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/20 19:26:31 by aribeiro          #+#    #+#              #
-#    Updated: 2017/06/10 14:14:37 by aribeiro         ###   ########.fr        #
+#    Updated: 2017/06/13 17:02:07 by aribeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = abstractVM
 
-SRC = 	Factory.cpp \
+SRC = 	BaseException.cpp \
+		Factory.cpp \
 		Lead.cpp \
 		Lexer.cpp \
 		main.cpp \

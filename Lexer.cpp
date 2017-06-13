@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 18:50:11 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 18:02:19 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void							Lexer::set_lexical(void)
 	int			previous_state = 0;
 	bool		stop = false;
 	std::vector<std::string>::const_iterator i = this->_input.begin();
+	if (i == this->_input.end())
+		throw BaseException("\t(lexer) Empty input!");
 	while (i != this->_input.end())
 	{
 		//go to the next line

@@ -6,19 +6,19 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 20:55:22 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 18:15:25 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lead.hpp"
 
-Lead::Lead(void) : _parser(NULL) {
+Lead::Lead(void) : _parser(NULL), _factory(NULL) {
 	if (DEBUG == 1)
 		std::cout << "Lead's constructor called" << std::endl;
 	this->_parser = new Parser();
 }
 
-Lead::Lead(Lead const & cpy) : _parser(NULL) {
+Lead::Lead(Lead const & cpy) {
 	*this = cpy;
 }
 
@@ -52,7 +52,7 @@ Factory							& Lead::get_factory(void) {
 	return *this->_factory;
 }
 
-bool							Lead::execute(void) {
+void							Lead::execute(void) {
 	this->_factory = new Factory();
 	size_t i;
 	size_t c = 0;
@@ -61,11 +61,11 @@ bool							Lead::execute(void) {
 	IOperand const * v1;
 	IOperand const * v2;
 	if (c == scan2.size()) //empty input
-		return false;
+		throw BaseException("\t(parser) Empty input!");
 	while(c < scan2.size())
 	{
 		if (scan2[c].error == true)
-			return false;
+			throw BaseException("ERROR(S) DETECTED");
 		if (scan2[c].instruction == PUSH)
 			this->_stack.push_back(this->_factory->createOperand(static_cast<eOperandType>(scan2[c].type), num2string(scan2[c].value)));
 		else if (scan2[c].instruction == POP)
@@ -73,7 +73,7 @@ bool							Lead::execute(void) {
 			if (this->_stack.empty() == true)
 			{
 				this->_parser->set_error_verbose(c, " : (execute) error pop | empty stack", -1);
-				return false;
+				throw BaseException("ERROR(S) DETECTED");
 			}
 			v1 = this->_stack.back();
 			this->_stack.pop_back();
@@ -92,17 +92,17 @@ bool							Lead::execute(void) {
 			if (this->_stack.empty() == true)
 			{
 				this->_parser->set_error_verbose(c, " : (execute) error assert | empty stack", -1);
-				return false;
+				throw BaseException("ERROR(S) DETECTED");
 			}
 			if (this->_stack.back()->toString() != num2string(scan2[c].value))
 			{
 				this->_parser->set_error_verbose(c, " : (execute) error assert | value error", -1);
-				return false;
+				throw BaseException("ERROR(S) DETECTED");
 			}
 			if (this->_stack.back()->getType() != static_cast<eOperandType> (scan2[c].type))
 			{
 				this->_parser->set_error_verbose(c, " : (execute) error assert | type error", -1);
-				return false;
+				throw BaseException("ERROR(S) DETECTED");
 			}
 		}
 		else if (scan2[c].instruction >= ADD && scan2[c].instruction <= MOD)
@@ -110,12 +110,12 @@ bool							Lead::execute(void) {
 			if (this->_stack.empty() == true)
 			{
 				this->_parser->set_error_verbose(c, " : (execute) error operand | empty stack", -1);
-				return false;
+				throw BaseException("ERROR(S) DETECTED");
 			}
 			if (this->_stack.size() < 2)
 			{
 				this->_parser->set_error_verbose(c, " : (execute) error operand | only one value in the stack", -1);
-				return false;
+				throw BaseException("ERROR(S) DETECTED");
 			}
 			v1 = this->_stack.back();
 			this->_stack.pop_back();
@@ -134,19 +134,19 @@ bool							Lead::execute(void) {
 			delete v1;
 			delete v2;
 			if (verif_error_operand(c) == false)
-				return false;
+				throw BaseException("ERROR(S) DETECTED");
 		}
 		else if (scan2[c].instruction == PRINT)
 		{
 			if (this->_stack.empty() == true)
 			{
 				this->_parser->set_error_verbose(c, " : (execute) error print | empty stack", -1);
-				return false;
+				throw BaseException("ERROR(S) DETECTED");
 			}
 			if (this->_stack.back()->getType() != INT8)
 			{
 				this->_parser->set_error_verbose(c, " : (execute) error print | type error", -1);
-				return false;
+				throw BaseException("ERROR(S) DETECTED");
 			}
 			if ((ascii = string2num(this->_stack.back()->toString())) < 0)
 				std::cout << YELLOW << "* Warning : (execute) error print | not printable value < 0\n" << NORMAL;
@@ -157,11 +157,9 @@ bool							Lead::execute(void) {
 			std::cout << ascii << std::endl;
 		}
 		else if (scan2[c].instruction == EXIT)
-			return true;
+			return ;
 		c++;
 	}
-	return true;
-
 }
 
 bool		Lead::verif_error_operand(size_t c)
@@ -195,9 +193,6 @@ void		Lead::print_all_errors(void)
 {
 	size_t c = 0;
 	std::vector<s_scanner2> scan2 = this->_parser->get_parsing();
-	std::cout << MAGENTA << "\nERROR(S) DETECTED" << NORMAL << std::endl;
-	if (c == scan2.size())
-		std::cout << YELLOW << "\tEmpty input\n" << NORMAL;
 	while (c < scan2.size())
 	{
 		if (scan2[c].error_verbose.compare("") != 0)
