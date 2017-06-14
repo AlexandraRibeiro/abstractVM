@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:43:01 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 18:42:12 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 23:10:50 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class Operand : public IOperand {
 		{
 			long double ld;
 			if (verbose_option == true)
-				std::cout << "Operand's constructor called\n";
+				std::cout << BLUE << "\t -> " << NORMAL << "Operand's constructor called\n";
 			this->_type = type;
 			this->_valueStr = value;
 			this->_precision = precision;
@@ -38,7 +38,7 @@ class Operand : public IOperand {
 		~Operand (void)
 		{
 			if (verbose_option == true)
-				std::cout << "Operand's destructor called\n";
+				std::cout << BLUE << "\t\t -> " << NORMAL << "Operand's destructor called\n";
 		}
 
 		Operand 	& operator=(Operand const & rhs)

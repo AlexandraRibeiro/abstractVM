@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:52:19 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 18:41:53 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 23:09:56 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 Factory::Factory(void) {
 	if (verbose_option == true)
-		std::cout << "Factory's constructor called" << std::endl;
+		std::cout << BLUE << "\t -> " << NORMAL << "Factory's constructor called" << std::endl;
 	this->_arrayPtr.push_back( & Factory::createInt8 );
 	this->_arrayPtr.push_back( & Factory::createInt16 );
 	this->_arrayPtr.push_back( & Factory::createInt32 );
@@ -29,7 +29,7 @@ Factory::Factory(Factory const & cpy) {
 
 Factory::~Factory(void) {
 	if (verbose_option == true)
-		std::cout << "Factory's destructor called" << std::endl;
+		std::cout << BLUE << "\t\t -> " << NORMAL << "Factory's destructor called" << std::endl;
 }
 
 Factory &			Factory::operator=(Factory const &) {

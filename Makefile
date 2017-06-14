@@ -6,7 +6,7 @@
 #    By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/20 19:26:31 by aribeiro          #+#    #+#              #
-#    Updated: 2017/06/13 17:02:07 by aribeiro         ###   ########.fr        #
+#    Updated: 2017/06/14 22:25:27 by aribeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ FLAGS = -Wall -Werror -Wextra
 
 #variables for colors to highlight the make results
 yellow	= \033[33;1m
-blue	= \033[36;1m
+blue	= \033[34;1m
 magenta = \033[35;1m
 green	= \033[32;1m
 normal	= \033[0m

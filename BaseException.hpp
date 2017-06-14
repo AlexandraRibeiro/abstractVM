@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 16:35:04 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 19:42:28 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 23:16:18 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 
 # define YELLOW		"\033[33;1m"
-# define BLUE		"\033[36;1m"
+# define BLUE		"\033[34;1m"
 # define MAGENTA	"\033[35;1m"
 # define GREEN		"\033[32;1m"
 # define NORMAL		"\033[0m"

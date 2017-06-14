@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 19:43:16 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 23:22:03 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Lead::Lead(void) : _parser(NULL), _factory(NULL)
 {
 	if (verbose_option == true)
-		std::cout << "Lead's constructor called" << std::endl;
+		std::cout << BLUE << "\t -> " << NORMAL << "Lead's constructor called" << std::endl;
 	this->_parser = new Parser();
 }
 
@@ -37,7 +37,7 @@ Lead::~Lead(void)
 	if (this->_parser)
 		delete(this->_parser);
 	if (verbose_option == true)
-		std::cout << "Lead's destructor called" << std::endl;
+		std::cout << BLUE << "\t\t -> " << NORMAL << "Lead's destructor called" << std::endl;
 }
 
 Lead &		Lead::operator=(Lead const &) {	return *this; }
@@ -57,7 +57,7 @@ void		Lead::execute(void)
 	while(c < scan2.size())
 	{
 		if (scan2[c].error == true)
-			throw BaseException("ERROR(S) DETECTED");
+			throw BaseException("\nERROR(S) DETECTED");
 		if (scan2[c].instruction == PUSH)
 			this->_stack.push_back(this->_factory->createOperand(static_cast<eOperandType>(scan2[c].type), num2string_trunc(scan2[c].value, scan2[c].type)));
 		else if (scan2[c].instruction == POP)
@@ -70,8 +70,10 @@ void		Lead::execute(void)
 			exe_operands(c, scan2[c].instruction);
 		else if (scan2[c].instruction == PRINT)
 			exe_print(c);
-		else if (scan2[c].instruction == EXIT)
+		else if (scan2[c].instruction == EXIT && (c + 1) == scan2.size())
 			return ;
+		else if (scan2[c].instruction == SHOW)
+			exe_show();
 		c++;
 	}
 }
@@ -83,7 +85,7 @@ void		Lead::exe_pop(size_t c)
 	if (this->_stack.empty() == true)
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error pop | empty stack", -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 	v1 = this->_stack.back();
 	this->_stack.pop_back();
@@ -95,10 +97,21 @@ void		Lead::exe_dump(void)
 {
 	size_t i;
 	if (this->_stack.empty() == true)
-		std::cout << YELLOW << "* Warning : (execute) error dump | empty stack\n" << NORMAL;
+		std::cout << YELLOW << "\n* Warning : (execute) error dump | empty stack\n\n" << NORMAL;
 	i = this->_stack.size();
 	while (i-- > 0)
 		std::cout << this->_stack[i]->toString() << std::endl;
+}
+
+/* EXE SHOW BONUS ////////////////////////////////////////////////////////////*/
+void		Lead::exe_show(void)
+{
+	size_t i;
+	if (this->_stack.empty() == true)
+		std::cout << YELLOW << "\n* Warning : (execute) error show | empty stack\n\n" << NORMAL;
+	i = this->_stack.size();
+	while (i-- > 0)
+		std::cout << "test show" << std::endl;
 }
 
 /* EXE ASSERT ////////////////////////////////////////////////////////////////*/
@@ -107,17 +120,17 @@ void		Lead::exe_assert(size_t c, int type, long double value)
 	if (this->_stack.empty() == true)
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error assert | empty stack", -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 	if (this->_stack.back()->toString() != num2string_trunc(value, type))
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error assert | value error", -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 	if (this->_stack.back()->getType() != static_cast<eOperandType> (type))
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error assert | type error", -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 }
 
@@ -129,12 +142,12 @@ void		Lead::exe_operands(size_t c, int instruction)
 	if (this->_stack.empty() == true)
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error operand | empty stack", -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 	if (this->_stack.size() < 2)
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error operand | only one value in the stack", -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 	v1 = this->_stack.back();
 	this->_stack.pop_back();
@@ -162,22 +175,22 @@ void		Lead::verif_error_operand(size_t c)
 	if (this->_stack.back()->toString().compare("OVER") == 0)
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error operand | overflow" , -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 	else if (this->_stack.back()->toString().compare("UNDER") == 0)
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error operand | underflow" , -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 	else if (this->_stack.back()->toString().compare("ZERODIV") == 0)
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error operand 'div' | division with 0" , -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 	else if (this->_stack.back()->toString().compare("ZEROMOD") == 0)
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error operand 'mod' | modulo with 0" , -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 }
 
@@ -189,12 +202,12 @@ void		Lead::exe_print(size_t c)
 	if (this->_stack.empty() == true)
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error print | empty stack", -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 	if (this->_stack.back()->getType() != INT8)
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error print | type error", -1);
-		throw BaseException("ERROR(S) DETECTED");
+		throw BaseException("\nERROR(S) DETECTED");
 	}
 	if ((ascii = string2num(this->_stack.back()->toString())) < 0)
 		std::cout << YELLOW << "* Warning : (execute) error print | not printable value < 0\n" << NORMAL;

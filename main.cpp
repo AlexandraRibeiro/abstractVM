@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 19:49:45 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 23:08:02 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,14 @@ int				main(int ac, char **av)
 	try
 	{
 		lexer->set_lexical();
+		if (verbose_option == true)
+			lexer->debug_print_lexical();
 		// PARSER ______________________________________________________________
 		try
 		{
 			parser->set_parsing();
+			if (verbose_option == true)
+				parser->debug_print_parsing();
 			// EXECUTE - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			try {
 				lead.execute();

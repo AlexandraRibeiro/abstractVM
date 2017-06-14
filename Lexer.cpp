@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 20:13:38 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 23:10:43 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 Lexer::Lexer(void) {
 	if (verbose_option == true)
-		std::cout << "Lexer's constructor called" << std::endl;
+		std::cout << BLUE << "\t -> " << NORMAL << "Lexer's constructor called" << std::endl;
 }
 
 Lexer::Lexer(Lexer const & cpy) {
@@ -24,7 +24,7 @@ Lexer::Lexer(Lexer const & cpy) {
 
 Lexer::~Lexer(void) {
 	if (verbose_option == true)
-		std::cout << "Lexer's destructor called" << std::endl;
+		std::cout << BLUE << "\t\t -> " << NORMAL << "Lexer's destructor called" << std::endl;
 }
 
 Lexer &		Lexer::operator=(Lexer const & ) {
@@ -54,7 +54,7 @@ void							Lexer::generate_option_stock_input(void)
 {
 	size_t c = 0;
 	std::string filename;
-	std::cout << BLUE << "Option -g detected -> Please enter the filename (no need the extension) : " << NORMAL;
+	std::cout << GREEN << "Option -g detected -> Please enter the filename (no need the extension) : " << NORMAL;
 	std::cin >> filename;
 	std::cout << std::endl;
 	std::ofstream savefile (filename + ".txt", std::ofstream::out);
@@ -143,18 +143,19 @@ std::vector<s_scanner> &			Lexer::get_lexical(void) {
 
 void								Lexer::debug_print_lexical(void) {
 	size_t c = 0;
-	std::cout << "\n**** LEXER ****\n";
+	std::cout << BLUE << "\n\n\t********** LEXER **********\n" << NORMAL;
 	while (c < this->_lexical.size())
 	{
-		std::cout << "line_nb = " << this->_lexical[c].line_nb << std::endl;
-		std::cout << "token = " << this->_lexical[c].token << std::endl;
-		std::cout << "lexeme = \"" << this->_lexical[c].lexeme << "\"\n";
-		std::cout << "original line = \"" << this->_lexical[c].original_line << "\"\n";
-		std::cout << "error = " << this->_lexical[c].error << std::endl;
-		std::cout << "error position = " << this->_lexical[c].error_position_lexer << std::endl;
-		std::cout << "___________________________________________\n";
+		std::cout << "\tline_nb = " << this->_lexical[c].line_nb << std::endl;
+		std::cout << "\ttoken = " << this->_lexical[c].token << std::endl;
+		std::cout << "\tlexeme = \"" << this->_lexical[c].lexeme << "\"\n";
+		std::cout << "\toriginal line = \"" << this->_lexical[c].original_line << "\"\n";
+		std::cout << "\terror = " << this->_lexical[c].error << std::endl;
+		std::cout << "\terror position = " << this->_lexical[c].error_position_lexer << std::endl;
+		std::cout << BLUE << "\t___________________________\n" << NORMAL;
 		c++;
 	}
+	std::cout << "\n";
 }
 
 

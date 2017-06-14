@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 18:42:20 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 23:10:57 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 Parser::Parser(void) : _lexer(NULL) {
 	if (verbose_option == true)
-		std::cout << "Parser's constructor called" << std::endl;
+		std::cout << BLUE << "\t -> " << NORMAL << "Parser's constructor called" << std::endl;
 	this->_lexer = new Lexer();
 }
 
@@ -26,7 +26,7 @@ Parser::~Parser(void) {
 	if (this->_lexer)
 		delete(this->_lexer);
 	if (verbose_option == true)
-		std::cout << "Parser's destructor called" << std::endl;
+		std::cout << BLUE << "\t\t -> " << NORMAL << "Parser's destructor called" << std::endl;
 }
 
 Parser &	Parser::operator=(Parser const & ) {
@@ -160,7 +160,10 @@ void		Parser::set_parsing(void)
 		}
 	}
 	if (this->_parsing[j].instruction != EXIT)									//search EXIT
+	{
+		this->_parsing[j].error = true;
 		this->set_error_verbose(j, this->_verbose[EXIT], -1);
+	}
 }
 
 
@@ -180,7 +183,7 @@ void		Parser::init_scanner2(int j, int line_nb, int instruction, int type,
 int			Parser::get_instruction(std::string lexeme)
 {
 	int i = 0;
-	while (i < 11)
+	while (i < 12)
 	{
 		if (lexeme.compare(this->_instruct[i]) == 0)
 			return i;
@@ -224,20 +227,21 @@ void		Parser::set_error_verbose(int j, std::string str1, int position_lexer)
 void		Parser::debug_print_parsing(void)
 {
 	size_t c = 0;
-	std::cout << "\n**** PARSER ****\n";
+	std::cout << BLUE << "\n\n\t********** PARSER **********\n" << NORMAL;
 	while (c < this->_parsing.size())
 	{
-		std::cout << "line_nb = \"" << this->_parsing[c].line_nb << "\"\n";
-		std::cout << "instruction = \"" << this->_parsing[c].instruction << "\"\n";
-		std::cout << "type = \"" << this->_parsing[c].type << "\"\n";
-		std::cout << "value = \"" << this->_parsing[c].value << "\"\n";
-		std::cout << "original_line = \"" << this->_parsing[c].original_line << "\"\n";
-		std::cout << "error = \"" << this->_parsing[c].error << "\"\n";
-		std::cout << "error position lexer = \"" << this->_parsing[c].error_position_lexer << "\"\n";
-		std::cout << "error verbose = \"" << this->_parsing[c].error_verbose << "\"\n";
-		std::cout << "___________________________________________\n";
+		std::cout << "\tline_nb = \"" << this->_parsing[c].line_nb << "\"\n";
+		std::cout << "\tinstruction = \"" << this->_parsing[c].instruction << "\"\n";
+		std::cout << "\ttype = \"" << this->_parsing[c].type << "\"\n";
+		std::cout << "\tvalue = \"" << this->_parsing[c].value << "\"\n";
+		std::cout << "\toriginal_line = \"" << this->_parsing[c].original_line << "\"\n";
+		std::cout << "\terror = \"" << this->_parsing[c].error << "\"\n";
+		std::cout << "\terror position lexer = \"" << this->_parsing[c].error_position_lexer << "\"\n";
+		std::cout << "\terror verbose = \n" << this->_parsing[c].error_verbose;
+		std::cout << BLUE << "\t___________________________\n" << NORMAL;
 		c++;
 	}
+	std::cout << "\n";
 }
 
 
@@ -248,9 +252,9 @@ std::vector<s_scanner2>		Parser::get_parsing(void) const {
 
 
 // STATIC _____________________________________________________________________
-const std::string		Parser::_instruct[11] = {
-	"push", "pop", "dump", "assert", "add", "sub", "mul", "div", "mod", "print", "exit" };
-	/* 0  ,  1	 ,  2	 ,  3      ,  4   ,  5   ,  6   ,  7   ,  8   ,  9     ,  10 	*/
+const std::string		Parser::_instruct[12] = {
+	"push", "pop", "dump", "assert", "add", "sub", "mul", "div", "mod", "print", "exit", "show" };
+	/* 0  ,  1	 ,  2	 ,  3      ,  4   ,  5   ,  6   ,  7   ,  8   ,  9     ,  10   ,  11     */
 
 const std::string		Parser::_type[5] = {
 	"int8", "int16", "int32", "float", "double" };
