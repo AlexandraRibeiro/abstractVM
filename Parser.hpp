@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:30:59 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/12 17:21:40 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 15:16:48 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ enum instructions {
 
 enum eOperandType {
 	INT8 = 0,
-	INT16,
-	INT32,
-	FLOAT,
-	DOUBLE
+	INT16,		// 1
+	INT32,		// 2
+	FLOAT,		// 3
+	DOUBLE		// 4
 };
 
 struct s_scanner2 {

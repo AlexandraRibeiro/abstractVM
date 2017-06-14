@@ -6,14 +6,14 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 21:45:34 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 18:42:20 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Parser.hpp"
 
 Parser::Parser(void) : _lexer(NULL) {
-	if (DEBUG == 1)
+	if (verbose_option == true)
 		std::cout << "Parser's constructor called" << std::endl;
 	this->_lexer = new Lexer();
 }
@@ -25,7 +25,7 @@ Parser::Parser(Parser const & cpy) : _lexer(NULL) {
 Parser::~Parser(void) {
 	if (this->_lexer)
 		delete(this->_lexer);
-	if (DEBUG == 1)
+	if (verbose_option == true)
 		std::cout << "Parser's destructor called" << std::endl;
 }
 

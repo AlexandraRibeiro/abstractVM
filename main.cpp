@@ -6,11 +6,13 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 21:29:54 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 18:47:22 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lead.hpp"
+
+bool	verbose_option = false;
 
 static void		stock_input_cin(Lexer &l)
 {
@@ -42,8 +44,21 @@ static void		stock_input_file(char *filename, Lexer &l)
 	}
 }
 
+static void		check_options(int ac, char **av, Lexer &l)
+{
+	if (verbose_option == 1 && ac > 2)
+		stock_input_file(av[2], l);
+	else if (verbose_option == 1)
+		stock_input_cin(l);
+	else if (verbose_option == 0)
+		stock_input_file(av[1], l);
+}
+
 int				main(int ac, char **av)
 {
+	if (ac > 1 && strcmp(av[1], "-v") == 0)
+		verbose_option = true;
+
 	Lead lead;
 	Parser *parser;
 	Lexer *lexer;
@@ -53,7 +68,7 @@ int				main(int ac, char **av)
 	// GET INPUT _______________________________________________________________
 	try {
 		if (ac > 1)
-			stock_input_file(av[1], *lexer);
+			check_options(ac, av, *lexer);
 		else
 			stock_input_cin(*lexer);
 	}

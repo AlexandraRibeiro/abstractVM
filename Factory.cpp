@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:52:19 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 21:37:37 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 18:41:53 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "Operand_temp.hpp"
 
 Factory::Factory(void) {
-	if (DEBUG == 1)
+	if (verbose_option == true)
 		std::cout << "Factory's constructor called" << std::endl;
 	this->_arrayPtr.push_back( & Factory::createInt8 );
 	this->_arrayPtr.push_back( & Factory::createInt16 );
@@ -28,7 +28,7 @@ Factory::Factory(Factory const & cpy) {
 }
 
 Factory::~Factory(void) {
-	if (DEBUG == 1)
+	if (verbose_option == true)
 		std::cout << "Factory's destructor called" << std::endl;
 }
 

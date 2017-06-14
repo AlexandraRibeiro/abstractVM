@@ -6,23 +6,23 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 15:11:12 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 18:41:59 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lead.hpp"
 
-Lead::Lead(void) : _parser(NULL), _factory(NULL) {
-	if (DEBUG == 1)
+Lead::Lead(void) : _parser(NULL), _factory(NULL)
+{
+	if (verbose_option == true)
 		std::cout << "Lead's constructor called" << std::endl;
 	this->_parser = new Parser();
 }
 
-Lead::Lead(Lead const & cpy) {
-	*this = cpy;
-}
+Lead::Lead(Lead const & cpy) { *this = cpy; }
 
-Lead::~Lead(void) {
+Lead::~Lead(void)
+{
 	size_t c = 0;
 	if (c < this->_stack.size())
 	{
@@ -36,25 +36,20 @@ Lead::~Lead(void) {
 		delete(this->_factory);
 	if (this->_parser)
 		delete(this->_parser);
-	if (DEBUG == 1)
+	if (verbose_option == true)
 		std::cout << "Lead's destructor called" << std::endl;
 }
 
-Lead &							Lead::operator=(Lead const &) {
-	return *this;
-}
+Lead &		Lead::operator=(Lead const &) {	return *this; }
 
-Parser							& Lead::get_parser(void) {
-	return *this->_parser;
-}
+Parser		& Lead::get_parser(void) { return *this->_parser; }
 
-Factory							& Lead::get_factory(void) {
-	return *this->_factory;
-}
+Factory		& Lead::get_factory(void) { return *this->_factory; }
 
-void							Lead::execute(void) {
+
+void		Lead::execute(void)
+{
 	this->_factory = new Factory();
-
 	size_t c = 0;
 	std::vector<s_scanner2> scan2 = this->_parser->get_parsing();
 	if (c == scan2.size()) //empty input
