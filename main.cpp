@@ -6,13 +6,14 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 18:47:22 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 19:49:45 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Lead.hpp"
 
 bool	verbose_option = false;
+bool	generate_option = false;
 
 static void		stock_input_cin(Lexer &l)
 {
@@ -44,20 +45,28 @@ static void		stock_input_file(char *filename, Lexer &l)
 	}
 }
 
-static void		check_options(int ac, char **av, Lexer &l)
+static void		check_input(int ac, char **av, Lexer &l)
 {
-	if (verbose_option == 1 && ac > 2)
+	if ((verbose_option == true || generate_option == true) && ac > 2)
 		stock_input_file(av[2], l);
-	else if (verbose_option == 1)
+	else if (verbose_option == true || generate_option == true)
 		stock_input_cin(l);
-	else if (verbose_option == 0)
+	else
 		stock_input_file(av[1], l);
+}
+
+static void		set_options(char *av1)
+{
+	if (strcmp(av1, VERBOSE_OPT) == 0)
+		verbose_option = true;
+	else if (strcmp(av1, GENERATE_OPT) == 0)
+		generate_option = true;
 }
 
 int				main(int ac, char **av)
 {
-	if (ac > 1 && strcmp(av[1], "-v") == 0)
-		verbose_option = true;
+	if (ac > 1)
+		set_options(av[1]);
 
 	Lead lead;
 	Parser *parser;
@@ -68,7 +77,7 @@ int				main(int ac, char **av)
 	// GET INPUT _______________________________________________________________
 	try {
 		if (ac > 1)
-			check_options(ac, av, *lexer);
+			check_input(ac, av, *lexer);
 		else
 			stock_input_cin(*lexer);
 	}

@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 18:42:04 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 20:13:38 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,22 @@ void							Lexer::debug_print_input(void) {
 		std::cout << this->_input[c] << std::endl;
 		c++;
 	}
+}
+
+void							Lexer::generate_option_stock_input(void)
+{
+	size_t c = 0;
+	std::string filename;
+	std::cout << BLUE << "Option -g detected -> Please enter the filename (no need the extension) : " << NORMAL;
+	std::cin >> filename;
+	std::cout << std::endl;
+	std::ofstream savefile (filename + ".txt", std::ofstream::out);
+	while (c < this->_input.size())
+	{
+		savefile << this->_input[c] << std::endl;
+		c++;
+	}
+	savefile.close();
 }
 
 
@@ -116,6 +132,8 @@ void							Lexer::set_lexical(void)
 		i++;
 		count_line++;
 	}
+	if (generate_option == true)
+		generate_option_stock_input();
 	std::vector<std::string>().swap(this->_input); 			//free this->_input
 }
 

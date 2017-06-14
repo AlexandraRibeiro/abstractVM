@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 19:56:03 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 22:03:21 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 19:57:39 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ std::string num2string_trunc(long double ld, int type)
 	else if (type == DOUBLE)
 		oss << std::setprecision(DB_PRECIS) << ld;
 	else
-		oss << ld;
+		oss << std::setprecision(17) << ld;
 	return oss.str();
 }
 

@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:44 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 17:06:20 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 19:43:59 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ class Lexer {
 		void						set_input(std::string line);
 		std::vector<std::string>	& get_input(void);
 		void						debug_print_input(void);
+		void						generate_option_stock_input(void);
 		//lexical ______________________________________________
 		void						set_lexical(void);
 		std::vector<s_scanner>		& get_lexical(void);

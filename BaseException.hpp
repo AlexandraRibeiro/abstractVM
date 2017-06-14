@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 16:35:04 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 18:41:02 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 19:42:28 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@
 # define FL_PRECIS	std::numeric_limits<float>::digits10
 # define DB_PRECIS	std::numeric_limits<double>::digits10
 
+# define VERBOSE_OPT	"-v"
+# define GENERATE_OPT	"-g"
+
 extern bool	verbose_option;
+extern bool	generate_option;
 
 long double string2num(const std::string & text);
 std::string num2string_trunc(long double ld, int type);
