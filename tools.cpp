@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/04 19:56:03 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 21:56:43 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/13 22:03:21 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,6 @@ std::string num2string_trunc(long double ld, int type)
 		oss << ld;
 	return oss.str();
 }
-
-// std::string num2string(long long ll, int precision)
-// {
-// 	std::ostringstream oss;
-// 	oss << std::setprecision(precision) << ll;
-// 	return oss.str();
-// }
 
 int			verif_value(int type, long double value)
 {

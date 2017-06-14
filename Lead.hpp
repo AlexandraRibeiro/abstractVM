@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:34 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/13 18:08:53 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/14 15:10:35 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ class Lead {
 		Parser			& get_parser(void);
 		Factory			& get_factory(void);
 		void			execute(void);
-		bool			verif_error_operand(size_t c);
+		void			exe_pop(size_t c);
+		void			exe_dump(void);
+		void			exe_assert(size_t c, int type, long double value);
+		void			exe_operands(size_t c, int instruction);
+		void			verif_error_operand(size_t c);
+		void			exe_print(size_t c);
 		void			print_all_errors(void);
 
 	private:
