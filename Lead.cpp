@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/16 15:32:42 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/16 16:32:38 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ void		Lead::execute(void)
 			return ;
 		else if (scan2[c].instruction == SHOW)
 			exe_show();
+		else if (scan2[c].instruction == SWAP)
+			exe_swap(c);
+		else if (scan2[c].instruction == REVERSE)
+			exe_reverse(c);
 		c++;
 	}
 }
@@ -92,7 +96,7 @@ void		Lead::exe_pop(size_t c)
 	delete v1;
 }
 
-/* EXE DUMP ///////////////////////////////////////////////////////////////////*/
+/* EXE DUMP //////////////////////////////////////////////////////////////////*/
 void		Lead::exe_dump(void)
 {
 	size_t i;
@@ -101,17 +105,6 @@ void		Lead::exe_dump(void)
 	i = this->_stack.size();
 	while (i-- > 0)
 		std::cout << this->_stack[i]->toString() << std::endl;
-}
-
-/* EXE SHOW BONUS ////////////////////////////////////////////////////////////*/
-void		Lead::exe_show(void)
-{
-	size_t i;
-	if (this->_stack.empty() == true)
-		std::cout << YELLOW << "\n* Warning : (execute) error show | empty stack\n\n" << NORMAL;
-	i = this->_stack.size();
-	while (i-- > 0)
-		std::cout << "type " << this->_parser->_type[this->_stack[i]->getType()] << "\t| value = " << this->_stack[i]->toString() << std::endl;
 }
 
 /* EXE ASSERT ////////////////////////////////////////////////////////////////*/
@@ -218,6 +211,42 @@ void		Lead::exe_print(size_t c)
 	std::cout << ascii << std::endl;
 }
 
+/* EXE SHOW (BONUS) //////////////////////////////////////////////////////////*/
+void		Lead::exe_show(void)
+{
+	size_t i;
+	if (this->_stack.empty() == true)
+		std::cout << YELLOW << "\n* Warning : (execute) error show | empty stack\n\n" << NORMAL;
+	i = this->_stack.size();
+	while (i-- > 0)
+		std::cout << "type " << this->_parser->_type[this->_stack[i]->getType()] << "\t| value = " << this->_stack[i]->toString() << std::endl;
+}
+
+/* EXE SWAP (BONUS) //////////////////////////////////////////////////////////*/
+void		Lead::exe_swap(size_t c)
+{
+	if (this->_stack.empty() == true)
+		std::cout << YELLOW << "\n* Warning : (execute) error swap | empty stack\n\n" << NORMAL;
+	if (this->_stack.size() < 2)
+	{
+		this->_parser->set_error_verbose(c, " : (execute) error reverse | only one value in the stack", -1);
+		throw BaseException("\nERROR(S) DETECTED");
+	}
+	std::iter_swap(this->_stack.end() - 1, this->_stack.end() - 2);
+}
+
+/* EXE REVERSE (BONUS) ///////////////////////////////////////////////////////*/
+void		Lead::exe_reverse(size_t c)
+{
+	if (this->_stack.empty() == true)
+		std::cout << YELLOW << "\n* Warning : (execute) error reverse | empty stack\n\n" << NORMAL;
+	if (this->_stack.size() < 2)
+	{
+		this->_parser->set_error_verbose(c, " : (execute) error reverse | only one value in the stack", -1);
+		throw BaseException("\nERROR(S) DETECTED");
+	}
+	std::iter_swap(this->_stack.begin(), this->_stack.end() -1);
+}
 
 /*	PRINT ERRORS /////////////////////////////////////////////////////////////*/
 void		Lead::print_all_errors(void)

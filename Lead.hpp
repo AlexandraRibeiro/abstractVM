@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:34 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 22:12:27 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/16 16:05:27 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ class Lead {
 		void			exe_dump(void);
 		void			exe_assert(size_t c, int type, long double value);
 		void			exe_operands(size_t c, int instruction);
+		// BONUS __________________________________________________________
 		void			exe_show(void);
+		void			exe_swap(size_t c);
+		void			exe_reverse(size_t c);
+		///////////////////////////////////////////////////////////////////
 		void			verif_error_operand(size_t c);
 		void			exe_print(size_t c);
 		void			print_all_errors(void);

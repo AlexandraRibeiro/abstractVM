@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/16 15:43:14 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/16 15:51:53 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ void		Parser::init_scanner2(int j, int line_nb, int instruction, int type,
 int			Parser::get_instruction(std::string lexeme)
 {
 	int i = 0;
-	while (i < 12)
+	while (i < 14)
 	{
 		if (lexeme.compare(this->_instruct[i]) == 0)
 			return i;
@@ -253,9 +253,9 @@ std::vector<s_scanner2>		Parser::get_parsing(void) const {
 
 
 // STATIC _____________________________________________________________________
-const std::string		Parser::_instruct[12] = {
-	"push", "pop", "dump", "assert", "add", "sub", "mul", "div", "mod", "print", "exit", "show" };
-	/* 0  ,  1	 ,  2	 ,  3      ,  4   ,  5   ,  6   ,  7   ,  8   ,  9     ,  10   ,  11     */
+const std::string		Parser::_instruct[14] = {
+	"push", "pop", "dump", "assert", "add", "sub", "mul", "div", "mod", "print", "exit", "show", "swap", "reverse" };
+	/* 0  ,  1	 ,  2	 ,  3      ,  4   ,  5   ,  6   ,  7   ,  8   ,  9     ,  10   ,  11   ,  12   ,  13       */
 
 const std::string		Parser::_type[5] = {
 	"int8", "int16", "int32", "float", "double" };

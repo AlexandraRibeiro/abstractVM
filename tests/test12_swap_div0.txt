@@ -1,0 +1,7 @@
+push int32(354)
+push int32(0)
+dump
+swap
+dump
+div
+exit
