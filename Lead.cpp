@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/16 16:32:38 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/16 16:53:21 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,10 +226,13 @@ void		Lead::exe_show(void)
 void		Lead::exe_swap(size_t c)
 {
 	if (this->_stack.empty() == true)
-		std::cout << YELLOW << "\n* Warning : (execute) error swap | empty stack\n\n" << NORMAL;
+	{
+		this->_parser->set_error_verbose(c, " : (execute) error swap | empty stack", -1);
+		throw BaseException("\nERROR(S) DETECTED");
+	}
 	if (this->_stack.size() < 2)
 	{
-		this->_parser->set_error_verbose(c, " : (execute) error reverse | only one value in the stack", -1);
+		this->_parser->set_error_verbose(c, " : (execute) error swap | only one value in the stack", -1);
 		throw BaseException("\nERROR(S) DETECTED");
 	}
 	std::iter_swap(this->_stack.end() - 1, this->_stack.end() - 2);
@@ -239,7 +242,10 @@ void		Lead::exe_swap(size_t c)
 void		Lead::exe_reverse(size_t c)
 {
 	if (this->_stack.empty() == true)
-		std::cout << YELLOW << "\n* Warning : (execute) error reverse | empty stack\n\n" << NORMAL;
+	{
+		this->_parser->set_error_verbose(c, " : (execute) error reverse | empty stack", -1);
+		throw BaseException("\nERROR(S) DETECTED");
+	}
 	if (this->_stack.size() < 2)
 	{
 		this->_parser->set_error_verbose(c, " : (execute) error reverse | only one value in the stack", -1);
