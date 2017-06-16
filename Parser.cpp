@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 23:10:57 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/16 15:43:14 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void		Parser::set_parsing(void)
 	while (c < lex.size())
 	{
 		pos = 0;
+		sign = 1;
 		this->_parsing.push_back(s_scanner2());
 		j++;
 		this->init_scanner2(j, lex[c].line_nb, -1, -1, -1, lex[c].original_line, false, -1);
@@ -126,7 +127,7 @@ void		Parser::set_parsing(void)
 					break;
 				}
 				this->_parsing[j].value = string2num(lex[c].lexeme) * sign;
-				if ((pos = verif_value(this->_parsing[j].type, this->_parsing[j].value)) != 7)								//search overflow/underflow
+				if ((pos = verif_value(this->_parsing[j].type, this->_parsing[j].value)) != 7)			//search overflow/underflow
 					break;
 			}
 			else if (pos == 7)

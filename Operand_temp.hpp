@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:43:01 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 23:10:50 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/16 15:26:24 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ class Operand : public IOperand {
 			this->_valueStr = value;
 			this->_precision = precision;
 			ld = string2num(this->_valueStr);
-			this->_valueTyped = static_cast<T>(ld);
 		}
 
 		Operand (Operand const & cpy) {*this = cpy;}
@@ -47,7 +46,6 @@ class Operand : public IOperand {
 			this->_valueStr = rhs.toString();
 			this->_precision = rhs.getPrecision();
 			this->_factory = rhs.getFactory();
-			this->_valueTyped = rhs.getValueTyped();
 			return *this;
 		}
 
@@ -70,13 +68,13 @@ class Operand : public IOperand {
 			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
 			if (type < FLOAT)
 			{
-				llresult = _valueTyped;
+				llresult = string2num(this->toString());
 				llresult += string2num(rhs.toString());
 				ldresult = llresult;
 			}
 			else
 			{
-				ldresult = _valueTyped;
+				ldresult = string2num(this->toString());
 				ldresult += string2num(rhs.toString());
 			}
 			if (verif_value(type, ldresult) == 15)
@@ -97,13 +95,13 @@ class Operand : public IOperand {
 			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
 			if (type < FLOAT)
 			{
-				llresult = _valueTyped;
+				llresult = string2num(this->toString());
 				llresult -= string2num(rhs.toString());
 				ldresult = llresult;
 			}
 			else
 			{
-				ldresult = _valueTyped;
+				ldresult = string2num(this->toString());
 				ldresult -= string2num(rhs.toString());
 			}
 			if (verif_value(type, ldresult) == 15)
@@ -124,13 +122,13 @@ class Operand : public IOperand {
 			eOperandType type = (this->_type >= rhs.getType() ? this->_type : rhs.getType());
 			if (type < FLOAT)
 			{
-				llresult = _valueTyped;
+				llresult = string2num(this->toString());
 				llresult *= string2num(rhs.toString());
 				ldresult = llresult;
 			}
 			else
 			{
-				ldresult = _valueTyped;
+				ldresult = string2num(this->toString());
 				ldresult *= string2num(rhs.toString());
 			}
 			if (verif_value(type, ldresult) == 15)
@@ -156,13 +154,13 @@ class Operand : public IOperand {
 			}
 			if (type < FLOAT)
 			{
-				llresult = _valueTyped;
+				llresult = string2num(this->toString());
 				llresult /= string2num(rhs.toString());
 				ldresult = llresult;
 			}
 			else
 			{
-				ldresult = _valueTyped;
+				ldresult = string2num(this->toString());
 				ldresult /= string2num(rhs.toString());
 			}
 			if (verif_value(type, ldresult) == 15)
@@ -189,14 +187,14 @@ class Operand : public IOperand {
 			}
 			if (type < FLOAT)
 			{
-				llresult1 = _valueTyped;
+				llresult1 = string2num(this->toString());
 				llresult2 = string2num(rhs.toString());
 				llresult1 = llresult1 % llresult2;
 				ldresult = llresult1;
 			}
 			else
 			{
-				ldresult = _valueTyped;
+				ldresult = string2num(this->toString());
 				ldresult = fmod(ldresult, string2num(rhs.toString()));
 			}
 			if (verif_value(type, ldresult) == 15)
@@ -212,7 +210,6 @@ class Operand : public IOperand {
 
 	private:
 		Operand(void) {}
-		T							_valueTyped;
 		eOperandType				_type;
 		std::string					_valueStr;
 		int							_precision;

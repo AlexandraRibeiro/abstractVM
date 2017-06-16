@@ -1,0 +1,6 @@
+push float(123.123)
+push double(12345.12345)
+dump
+add
+dump
+exit

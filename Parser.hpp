@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:30:59 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 22:08:52 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/16 14:38:52 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ enum instructions {
 	MOD,		// 8
 	PRINT,		// 9
 	EXIT,		// 10
-	SHOW		// 11		
+	SHOW		// 11
 };
 
 enum eOperandType {
@@ -70,7 +70,6 @@ class Parser {
 
 	private:
 		Lexer 						*_lexer;
-		std::string					_errors;
 		std::vector<s_scanner2>		_parsing;
 		// static ______________________________________________
 		static const std::string	_instruct[12];

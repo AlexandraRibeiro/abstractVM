@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 23:22:03 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/16 15:32:42 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void		Lead::exe_show(void)
 		std::cout << YELLOW << "\n* Warning : (execute) error show | empty stack\n\n" << NORMAL;
 	i = this->_stack.size();
 	while (i-- > 0)
-		std::cout << "test show" << std::endl;
+		std::cout << "type " << this->_parser->_type[this->_stack[i]->getType()] << "\t| value = " << this->_stack[i]->toString() << std::endl;
 }
 
 /* EXE ASSERT ////////////////////////////////////////////////////////////////*/

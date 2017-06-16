@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:31:41 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 23:10:43 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/16 15:07:15 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ void							Lexer::generate_option_stock_input(void)
 {
 	size_t c = 0;
 	std::string filename;
-	std::cout << GREEN << "Option -g detected -> Please enter the filename (no need the extension) : " << NORMAL;
+	std::cout << GREEN << "\n\tOption -g detected -> " << NORMAL << "Please enter the filename (no need the extension) : ";
 	std::cin >> filename;
-	std::cout << std::endl;
+	if (filename.compare("") == 0)
+		filename = "input";
 	std::ofstream savefile (filename + ".txt", std::ofstream::out);
 	while (c < this->_input.size())
 	{
@@ -64,6 +65,7 @@ void							Lexer::generate_option_stock_input(void)
 		c++;
 	}
 	savefile.close();
+	std::cout << GREEN << "\t-> " << NORMAL << "The file " << filename << ".txt has been created\n\n";
 }
 
 
