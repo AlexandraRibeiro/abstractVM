@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 20:43:01 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/16 15:26:24 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/16 17:17:08 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,11 @@ class Operand : public IOperand {
 	public:
 		Operand(eOperandType type, std::string const & value, int precision, Factory const & factory) : _factory(factory)
 		{
-			long double ld;
 			if (verbose_option == true)
 				std::cout << BLUE << "\t -> " << NORMAL << "Operand's constructor called\n";
 			this->_type = type;
 			this->_valueStr = value;
 			this->_precision = precision;
-			ld = string2num(this->_valueStr);
 		}
 
 		Operand (Operand const & cpy) {*this = cpy;}

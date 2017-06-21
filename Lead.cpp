@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/16 16:53:21 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/17 15:19:56 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,12 +203,11 @@ void		Lead::exe_print(size_t c)
 		throw BaseException("\nERROR(S) DETECTED");
 	}
 	if ((ascii = string2num(this->_stack.back()->toString())) < 0)
-		std::cout << YELLOW << "* Warning : (execute) error print | not printable value < 0\n" << NORMAL;
-	else if (ascii == 127)
-		std::cout << YELLOW << "* Warning : (execute) error print | not printable value = 127\n" << NORMAL;
-	else if (ascii < 32)
-		std::cout << YELLOW << "* Warning : (execute) error print | not printable value < 32\n" << NORMAL;
-	std::cout << ascii << std::endl;
+		std::cout << YELLOW << "* Warning : (execute) error print | negative not printable value = " << this->_stack.back()->toString() << "\n" << NORMAL;
+	else if ((ascii > -1 && ascii < 9) || (ascii > 10 && ascii < 32) || (ascii == 127))
+		std::cout << YELLOW << "* Warning : (execute) error print | special character not printable value = " << this->_stack.back()->toString() << "\n" << NORMAL;
+	else
+		std::cout << ascii << std::endl;
 }
 
 /* EXE SHOW (BONUS) //////////////////////////////////////////////////////////*/

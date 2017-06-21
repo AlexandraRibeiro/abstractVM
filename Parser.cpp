@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/26 14:31:02 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/16 15:51:53 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/16 17:29:00 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,7 @@ const std::string		Parser::_verbose[16] = {
 	" : (parser) error expected ')' after value",					// pos = 7
 	"",
 	" : (parser) error after ')'",									// pos = 9
-	" : (parser) the program doesn’t have an exit instruction",		// pos = 10 = EXIT
+	" : (parser) error the exit instruction is missing",			// pos = 10 = EXIT
 	" : (parser) error expected nothing after this instruction",	// pos = 11
 	" : (parser) error 2 'exit' instruction",						// pos = 12
 	" : (parser) error wrong type for this value (RNUM/INUM)",		// pos = 13
