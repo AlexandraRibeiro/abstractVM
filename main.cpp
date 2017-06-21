@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 15:39:43 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/14 23:08:02 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/17 15:24:26 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void		stock_input_cin(Lexer &l)
 			l.set_input(buff);
 	}
 	if (i == false)
-		throw BaseException("* WARNING : no \";;\" at the end of program read from standard input");
+		throw BaseException("* WARNING : no \";;\" found from standard input");
 }
 
 static void		stock_input_file(char *filename, Lexer &l)

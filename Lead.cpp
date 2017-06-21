@@ -6,7 +6,7 @@
 /*   By: aribeiro <aribeiro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 14:14:31 by aribeiro          #+#    #+#             */
-/*   Updated: 2017/06/17 15:19:56 by aribeiro         ###   ########.fr       */
+/*   Updated: 2017/06/17 15:28:58 by aribeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,11 +204,12 @@ void		Lead::exe_print(size_t c)
 	}
 	if ((ascii = string2num(this->_stack.back()->toString())) < 0)
 		std::cout << YELLOW << "* Warning : (execute) error print | negative not printable value = " << this->_stack.back()->toString() << "\n" << NORMAL;
-	else if ((ascii > -1 && ascii < 9) || (ascii > 10 && ascii < 32) || (ascii == 127))
+	else if ( (ascii > -1 && ascii < 9) || (ascii > 10 && ascii < 32) || (ascii == 127))
 		std::cout << YELLOW << "* Warning : (execute) error print | special character not printable value = " << this->_stack.back()->toString() << "\n" << NORMAL;
 	else
 		std::cout << ascii << std::endl;
 }
+
 
 /* EXE SHOW (BONUS) //////////////////////////////////////////////////////////*/
 void		Lead::exe_show(void)
