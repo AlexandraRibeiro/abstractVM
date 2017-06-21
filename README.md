@@ -6,3 +6,8 @@ Objectives :
  - C++
  - Machine virtuelle
  - Manipulation de données abstraites 
+
+Skills :
+ - Imperative programming
+ - Object-oriented programming
+ - Rigor 
